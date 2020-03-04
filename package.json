@@ -1,0 +1,48 @@
+{
+  "name": "rendang",
+  "version": "1.0.0",
+  "description": " A (maybe) useful bot for your Discord server!",
+  "main": "Main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hazmi35/rendang.git"
+  },
+  "keywords": [
+    "rendang",
+    "bot",
+    "discord",
+    "discordjs",
+    "js",
+    "nodejs"
+  ],
+  "author": "Hazmi35",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Hazmi35/rendang/issues"
+  },
+  "homepage": "https://github.com/Hazmi35/rendang#readme",
+  "devDependencies": {
+    "@types/node": "^13.7.7",
+    "@types/superagent": "^4.1.7",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prefer-arrow": "^1.1.7",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@discordjs/opus": "^0.1.0",
+    "bufferutil": "^4.0.1",
+    "discord.js": "github:discordjs/discord.js",
+    "dotenv": "^8.2.0",
+    "erlpack": "github:discordapp/erlpack",
+    "superagent": "^5.2.2",
+    "utf-8-validate": "^5.0.2",
+    "zlib-sync": "^0.1.6"
+  }
+}

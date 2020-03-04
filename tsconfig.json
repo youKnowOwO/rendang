@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "strict": true,    
+    "sourceMap": false,
+    "alwaysStrict": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/typings/interfaces"
+    ],
+    "noImplicitAny": false,
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.js", "./src/**/*.json", "*.ts", "*.js", "package.json", "package-lock.json", "*.env", "*.gitignore"],
+  "exclude": ["node_modules/**", "tsconfig.json", "tslint.json", "README.md"]
+}
