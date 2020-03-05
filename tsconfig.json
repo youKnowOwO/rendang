@@ -11,10 +11,10 @@
     "resolveJsonModule": true,
     "typeRoots": [
       "./node_modules/@types",
-      "./src/typings/interfaces"
+      "src/typings"
     ],
     "noImplicitAny": false,
   },
-  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.js", "./src/**/*.json", "*.ts", "*.js", "package.json", "package-lock.json", "*.env", "*.gitignore"],
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.js", "./src/**/*.json", "*.ts", "*.js", "package.json", "package-lock.json", "*.env"],
   "exclude": ["node_modules/**", "tsconfig.json", "tslint.json", "README.md"]
 }

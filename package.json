@@ -4,7 +4,9 @@
   "description": " A (maybe) useful bot for your Discord server!",
   "main": "Main.ts",
   "scripts": {
-    "test": "eslint --ignore-path .gitignore *.ts"
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js)\"",
+    "test": "npm run lint",
+    "build": "tsc"
   },
   "engines": {
     "node": "12.x"
@@ -21,7 +23,7 @@
     "js",
     "nodejs"
   ],
-  "author": "Hazmi35",
+  "author": "Hazmi35 (contact@hzmi.xyz) (https://github.com/Hazmi35)",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/Hazmi35/rendang/issues"

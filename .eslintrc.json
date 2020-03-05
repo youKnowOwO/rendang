@@ -20,8 +20,8 @@
     "rules": {
         "@typescript-eslint/array-type": "off",
         "@typescript-eslint/indent": [
-            "error",
-            2
+            "warn",
+            4
         ],
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/member-delimiter-style": [
@@ -37,50 +37,34 @@
                 }
             }
         ],
-        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "warn",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-parameter-properties": "off",
         "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/prefer-for-of": "error",
-        "@typescript-eslint/prefer-function-type": "error",
+        "@typescript-eslint/prefer-for-of": "warn",
+        "@typescript-eslint/prefer-function-type": "warn",
+        "@typescript-eslint/explicit-function-return-type": "warn",
         "@typescript-eslint/quotes": [
-            "error",
+            "warn",
             "double",
             {
                 "avoidEscape": true
             }
         ],
         "@typescript-eslint/semi": [
-            "error",
+            "warn",
             "always"
         ],
+        "@typescript-eslint/no-misused-promises": "warn",
+        "@typescript-eslint/require-await": "warn",
         "@typescript-eslint/unified-signatures": "error",
-        "camelcase": "error",
         "complexity": "off",
-        "constructor-super": "error",
-        "dot-notation": "error",
-        "eqeqeq": [
-            "error",
-            "smart"
-        ],
-        "guard-for-in": "error",
-        "id-blacklist": [
-            "error",
-            "any",
-            "Number",
-            "number",
-            "String",
-            "string",
-            "Boolean",
-            "boolean",
-            "Undefined",
-            "undefined"
-        ],
-        "id-match": "error",
+        "constructor-super": "warn",
+        "dot-notation": "warn",
         "import/order": "off",
         "max-classes-per-file": [
-            "error",
-            1
+            "warn",
+            3
         ],
         "new-parens": "error",
         "no-bitwise": "error",
@@ -112,8 +96,8 @@
             "never"
         ],
         "radix": "off",
-        "spaced-comment": "error",
-        "use-isnan": "error",
+        "spaced-comment": "warn",
+        "use-isnan": "warn",
         "valid-typeof": "off"
     }
 }
