@@ -2,7 +2,7 @@
   "name": "rendang",
   "version": "1.0.0",
   "description": " A (maybe) useful bot for your Discord server!",
-  "main": "Main.ts",
+  "main": "src/main.ts",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js)\"",
     "test": "npm run lint",
