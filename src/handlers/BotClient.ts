@@ -34,7 +34,6 @@ export default class BotClient extends Client {
         this.events.forEach((event: EventProp) => {
             this.on(event.name, event.run);
         });
-        this.loader.modules!.build();
         return this;
     }
 
