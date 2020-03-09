@@ -102,7 +102,13 @@ export default class CommandsHandler {
             .setAuthor(`You don't have permission${typeof permission === "object" ? "s" : ""} to execute this command`, client.util.getAvatar(client.user))
             .setColor("#FF0000")
             .setThumbnail(client.util.getGuildIcon(guild))
-            .addFields({name: "❓ **Why?**", value: `You're trying to run **${commandName}** command, but you don't have the required permission${typeof permission === "object" ? "s" : ""} to do that.`}, {name: `<:info:596219360209797161> **Required Permission${typeof permission === "object" ? "s" : ""}**`, value: typeof permission === "object" ? permission.map((p) => `\`${p}\``).join(", ") : permission})
+            .addFields({
+                name: "❓ **Why?**",
+                value: `You're trying to run **${commandName}** command, but you don't have the required permission${typeof permission === "object" ? "s" : ""} to do that.`
+            }, {
+                name: `<:info:596219360209797161> **Required Permission${typeof permission === "object" ? "s" : ""}**`,
+                value: typeof permission === "object" ? permission.map((p) => `\`${p}\``).join(", ") : permission
+            })
             .setTimestamp()
             .setFooter(`${member.user.username}@${guild.name}`, client.util.getAvatar(member));
         message.channel.send(embed);
@@ -114,7 +120,13 @@ export default class CommandsHandler {
             .setAuthor(`I don't have permission${typeof permission === "object" ? "s" : ""} to execute this command,`, client.util.getAvatar(client.user))
             .setColor("#FF0000")
             .setThumbnail(client.util.getGuildIcon(guild))
-            .addFields({name: "❓ **Why?**", value: `You're trying to run **${commandName}** command, but I (the bot) don't have the required permission${typeof permission === "object" ? "s" : ""} to do that.`}, {name: `<:info:596219360209797161> **Required Permission${typeof permission === "object" ? "s" : ""}**`, value: typeof permission === "object" ? permission.map((p) => `\`${p}\``).join(", ") : permission})
+            .addFields({
+                name: "❓ **Why?**",
+                value: `You're trying to run **${commandName}** command, but I (the bot) don't have the required permission${typeof permission === "object" ? "s" : ""} to do that.`
+            }, {
+                name: `<:info:596219360209797161> **Required Permission${typeof permission === "object" ? "s" : ""}**`,
+                value: typeof permission === "object" ? permission.map((p) => `\`${p}\``).join(", ") : permission
+            })
             .setTimestamp()
             .setFooter(`${member.user.username}@${guild.name}`, client.util.getAvatar(member));
         message.channel.send(embed);
