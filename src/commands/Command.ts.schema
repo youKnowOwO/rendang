@@ -1,0 +1,28 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import BaseCommand from "../../handlers/BaseCommand";
+import BotClient from "../../handlers/BotClient";
+import Message from "../../typings/Message";
+import BotConfig from "../../typings/BotConfig";
+
+export default class PingCommand extends BaseCommand {
+    constructor() {
+        super();
+        this.conf = {
+            aliases: ["pong", "peng", "p", "pingpong"],
+            cooldown: 3,
+            devOnly: false,
+            requiredPermissions: [],
+            disable: false
+        };
+
+        this.help = {
+            name: "ping",
+            description: "Shows the ping of the bot to the Discord's server",
+            example: "{prefix}ping",
+            usage: "{prefix}ping"
+        };
+    }
+    public run(client: BotClient, message: Message, args: string[], flags: string[], config: typeof BotConfig | null): any {
+        return undefined;
+    }
+}

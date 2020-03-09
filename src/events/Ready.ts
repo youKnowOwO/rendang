@@ -9,7 +9,6 @@ export default class ReadyEvent {
         this.name = "ready";
 
         this.run = (): void => {
-            this.client.loader.modules!.build();
             console.log(`${this.client.user!.username} is ready to serve ${this.client.users.cache.size} users on ${this.client.guilds.cache.size} guilds in ${this.client.guilds.cache.size} channels!`);
             return undefined;
         };
