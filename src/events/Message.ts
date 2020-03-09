@@ -33,7 +33,7 @@ export default class MessageEvent {
             if (msg.includes(`<@${client.user!.id}>`) || msg.includes(`<@!${client.user!.id}>`)) {
                 const embed = new MessageEmbed()
                     .setAuthor(`${client.user!.username}`, client.util.getAvatar(client.user))
-                    .setColor("RANDOM")
+                    .setColor("GREEN")
                     .setDescription(`:wave: | Hello ${message.author.username}, my prefix for this server is \`${message.guild.prefix}\``)
                     .setTimestamp();
                 message.channel.send(embed);
