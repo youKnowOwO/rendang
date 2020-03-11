@@ -1,9 +1,10 @@
-## THIS PROJECT IS UNDER HEAVY DEVELOPMENT
+<h1 align="center">THIS PROJECT IS UNDER HEAVY DEVELOPMENT</h1>
 
-<a href='https://github.com/Hazmi35/rendang/workflows/'>
-    <img alt="Workflows" src="https://github.com/Hazmi35/rendang/workflows/Node.js%20CI/badge.svg">
-</a>
+<h2 align="center">Rendang</h1>
 
-# rendang
+<p align="center">
+    <a href='https://github.com/Hazmi35/rendang/workflows/'>
+        <img alt="Workflows" src="https://github.com/Hazmi35/rendang/workflows/Node.js%20CI/badge.svg">
+    </a>
+</p>
 
- A (maybe) useful bot for your Discord server!
