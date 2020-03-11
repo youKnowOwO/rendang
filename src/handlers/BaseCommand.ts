@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import CommandCompopnent from "../typings/Command";
+import CommandComponent from "../typings/Command";
 import BotClient from "./BotClient";
 import Message from "../typings/Message";
 import BotConfig from "../typings/BotConfig";
 
-export default class BaseCommand implements CommandCompopnent {
-    public conf: CommandCompopnent["conf"];
-    public help: CommandCompopnent["help"];
+export default class BaseCommand implements CommandComponent {
+    public conf: CommandComponent["conf"];
+    public help: CommandComponent["help"];
     constructor() {
         this.conf = {
             aliases: [],

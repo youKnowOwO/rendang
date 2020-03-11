@@ -1,6 +1,6 @@
 import { Client, ClientOptions, Collection, Snowflake } from "discord.js";
 import config from "../config.json";
-import CommandCompopnent from "../typings/Command";
+import CommandComponent from "../typings/Command";
 import EventsLoader from "./Events";
 import EventProp from "../typings/Event";
 import { resolve } from "path";
@@ -11,7 +11,7 @@ import CommandsHandler from "./Commands.js";
 export default class BotClient extends Client {
     public config: typeof config = config;
     public events: Collection<string, EventProp>;
-    public commands: Collection<string | undefined, CommandCompopnent>;
+    public commands: Collection<string | undefined, CommandComponent>;
     public aliases: Collection<string, string>;
     public categories: Collection<string, object>;
     public helpMeta: Collection<string, object>;
