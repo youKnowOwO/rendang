@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js)\"",
     "test": "npm run lint",
-    "build": "tsc",
+    "build": "npm run test && npm install && tsc",
     "start": "node dist/main"
   },
   "engines": {
