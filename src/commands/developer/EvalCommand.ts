@@ -1,5 +1,4 @@
 /* eslint-disable no-eval */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../handlers/structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
 import Message from "../../typings/Message";
