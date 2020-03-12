@@ -4,9 +4,14 @@ import CommandComponent from "../typings/Command";
 import EventsLoader from "./Events";
 import EventProp from "../typings/Event";
 import { resolve } from "path";
-import ModulesLoader from "./Modules.js";
-import Util from "./Util.js";
-import CommandsHandler from "./Commands.js";
+import ModulesLoader from "./Modules";
+import Util from "./Util";
+import CommandsHandler from "./Commands";
+
+// Extending DiscordJS structures
+require("./structures/Guild");
+require("./structures/User");
+require("./structures/GuildMember");
 
 export default class BotClient extends Client {
     public config: typeof config = config;
@@ -21,6 +26,7 @@ export default class BotClient extends Client {
     private loader: { events?: EventsLoader; modules?: ModulesLoader };
     constructor(opt: ClientOptions) {
         super(opt);
+
         this.events = new Collection();
         this.commands = new Collection();
         this.aliases = new Collection();
