@@ -2,7 +2,7 @@ import { Structures } from "discord.js";
 import BotClient from "../BotClient";
 
 export default (): Structures => {
-    Structures.extend("User", DJSUser => {
+    return Structures.extend("User", DJSUser => {
         class User extends DJSUser {
             public isDev?: boolean;
             constructor(client: BotClient, data: object) {
