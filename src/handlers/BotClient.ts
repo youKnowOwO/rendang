@@ -9,9 +9,9 @@ import Util from "./Util";
 import CommandsHandler from "./Commands";
 
 // Extending DiscordJS structures
-require("./structures/Guild");
-require("./structures/User");
-require("./structures/GuildMember");
+import "../handlers/structures/User";
+import "../handlers/structures/Guild";
+import "../handlers/structures/GuildMember";
 
 export default class BotClient extends Client {
     public config: typeof config = config;
