@@ -68,7 +68,6 @@ export default class CommandsHandler {
 
         // command handler
         try {
-            const config = this.client.config;
             args.missing = (msg: Message, reason: string, helps): MessageEmbed => {
                 const helpMeta = helps;
                 const usage = helpMeta.usage ? helpMeta.usage.replace(new RegExp("{prefix}", "g"), `**${message.guild.prefix}**`) : "No usage provided.";
@@ -87,7 +86,7 @@ export default class CommandsHandler {
                 return embed;
             };
             if (command.conf.devOnly && !message.author.isDev) { return; }
-            command.run(this.client, message, args, flags, config);
+            command.run(this.client, message, args, flags, this.client.config);
         } catch (e) {
             console.error(e);
         } finally {

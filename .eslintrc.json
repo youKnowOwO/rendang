@@ -37,6 +37,7 @@
                 }
             }
         ],
+        "no-undef": "error",
         "@typescript-eslint/no-empty-function": "warn",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-parameter-properties": "off",

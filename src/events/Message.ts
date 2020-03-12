@@ -14,14 +14,6 @@ export default class MessageEvent {
             if (message.author.bot || !message.guild) { return undefined; }
 
             const msg = message.content.toLowerCase();
-            message.guild.prefix = client.config.prefix;
-
-            if (client.config.devs.includes(message.author.id)) {
-                message.author.isDev = true;
-            } else {
-                message.author.isDev = false;
-            }
-            message.member.isDev = message.author.isDev ? true : false;
 
             if (msg.startsWith(message.guild.prefix) || msg.startsWith(message.guild.prefix)) {
                 try {

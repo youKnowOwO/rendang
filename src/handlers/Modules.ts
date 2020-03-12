@@ -16,6 +16,14 @@ export default class ModulesLoader {
             if (err) {
                 console.error(err);
             }
+            categories.forEach(category => {
+                if (category.endsWith(".schema")) {
+                    const index = categories.indexOf(category);
+                    if (index > -1) {
+                        categories.splice(index, 1);
+                    }
+                }
+            });
             console.info(`Found ${categories.length} categories.`);
             categories.forEach(category => {
                 const moduleConf: ModuleConf = require(`${this.path}/${category}/module.json`);
@@ -28,7 +36,7 @@ export default class ModulesLoader {
                     if (err) console.error(err);
                     const disabledCommands: string[] = [];
                     files.forEach(file => {
-                        if (!file.endsWith(".js")) return undefined;
+                        if (!file.endsWith(".js") && !file.endsWith(".ts")) return undefined;
                         const prop: CommandComponent = new (require(`${this.path}/${category}/${file}`).default)();
                         const cmdName: string = file.split(".")[0];
                         prop.category = category;
