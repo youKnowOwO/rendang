@@ -68,30 +68,13 @@ export default class CommandsHandler {
 
         // command handler
         try {
-            args.missing = (msg: Message, reason: string, helps): MessageEmbed => {
-                const helpMeta = helps;
-                const usage = helpMeta.usage ? helpMeta.usage.replace(new RegExp("{prefix}", "g"), `**${message.guild.prefix}**`) : "No usage provided.";
-                const example = helpMeta.example ? helpMeta.example.replace(new RegExp("{prefix}", "g"), `**${message.guild.prefix}**`) : "No example provided.";
-                const embed = new MessageEmbed()
-                    .setAuthor(`It's not how you use ${helpMeta.name}`, `${this.client.config.staticServer}/images/596234507531845634.png`)
-                    .setColor("#FF0000")
-                    .setThumbnail(this.client.user!.displayAvatarURL())
-                    .addFields({name: "<:info:596219360209797161> Reason:", value: `**${reason}**`})
-                    .addFields({name: "<:true:596220121429573653> Correct Usage :", value: usage })
-                    .addFields({name: "📃 Example :", value: example})
-                    .setTimestamp()
-                    .setFooter(`Get more info about this command using ${message.guild.prefix}help ${helpMeta.name}`, `${this.client.config.staticServer}/images/390511462361202688.png`);
-
-                msg.channel.send(embed);
-                return embed;
-            };
-            if (command.conf.devOnly && !message.author.isDev) { return; }
+            if (command.conf.devOnly && !message.author.isDev) return undefined;
             command.run(this.client, message, args, flags, this.client.config);
         } catch (e) {
             console.error(e);
         } finally {
             // eslint-disable-next-line no-unsafe-finally
-            if (command.conf.devOnly && !message.author.isDev) { return undefined; }
+            if (command.conf.devOnly && !message.author.isDev) return undefined;
             console.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild.name}`);
         }
     }

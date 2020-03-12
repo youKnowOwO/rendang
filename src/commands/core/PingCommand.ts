@@ -19,8 +19,8 @@ export default class PingCommand extends BaseCommand {
         this.help = {
             name: "ping",
             description: "Shows the ping of the bot to the Discord's server",
-            example: "{prefix}ping",
-            usage: "{prefix}ping"
+            example: "ping",
+            usage: "ping"
         };
     }
     public run(client: BotClient, message: Message, args: string[], flags: string[], config: typeof BotConfig | null): any {

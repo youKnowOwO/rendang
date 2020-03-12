@@ -7,6 +7,7 @@ import { resolve } from "path";
 import ModulesLoader from "./Modules";
 import Util from "./Util";
 import CommandsHandler from "./Commands";
+import * as request from "superagent";
 
 // Extending DiscordJS structures
 import "../handlers/structures/User";
@@ -15,6 +16,7 @@ import "../handlers/structures/GuildMember";
 
 export default class BotClient extends Client {
     public config: typeof config = config;
+    public request: typeof request;
     public events: Collection<string, EventProp>;
     public commands: Collection<string | undefined, CommandComponent>;
     public aliases: Collection<string, string>;
@@ -27,13 +29,16 @@ export default class BotClient extends Client {
     constructor(opt: ClientOptions) {
         super(opt);
 
+        this.request = request;
+        this.util = new Util(this);
+
         this.events = new Collection();
         this.commands = new Collection();
         this.aliases = new Collection();
         this.categories = new Collection();
         this.helpMeta = new Collection();
         this.cooldowns = new Collection();
-        this.util = new Util(this);
+
         this.commandsHandler = new CommandsHandler(this);
         this.loader = {};
         this.loader.events = new EventsLoader(this, resolve(__dirname, "..", "events"));

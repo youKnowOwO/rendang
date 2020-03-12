@@ -4,11 +4,11 @@ import BotClient from "../../handlers/BotClient";
 import Message from "../../typings/Message";
 import BotConfig from "../../typings/BotConfig";
 
-export default class PingCommand extends BaseCommand {
+export default class SchemaCommand extends BaseCommand {
     constructor() {
         super();
         this.conf = {
-            aliases: ["pong", "peng", "p", "pingpong"],
+            aliases: [],
             cooldown: 3,
             devOnly: false,
             requiredPermissions: [],
@@ -16,10 +16,10 @@ export default class PingCommand extends BaseCommand {
         };
 
         this.help = {
-            name: "ping",
-            description: "Shows the ping of the bot to the Discord's server",
-            example: "{prefix}ping",
-            usage: "{prefix}ping"
+            name: "cmd!",
+            description: "!THIS IS A SCHEMA!",
+            example: "cmd",
+            usage: "cmd"
         };
     }
     public run(client: BotClient, message: Message, args: string[], flags: string[], config: typeof BotConfig | null): any {
