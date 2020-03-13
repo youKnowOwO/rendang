@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import CommandComponent from "../../typings/Command";
-import BotClient from "../BotClient";
-import Message from "../../typings/Message";
-import BotConfig from "../../typings/BotConfig";
+import CommandComponent from "../typings/Command";
+import BotClient from "../handlers/BotClient";
+import Message from "../typings/Message";
+import BotConfig from "../typings/BotConfig";
 
 export default class BaseCommand implements CommandComponent {
     public conf: CommandComponent["conf"];

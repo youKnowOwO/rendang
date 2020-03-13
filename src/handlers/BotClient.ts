@@ -10,9 +10,9 @@ import CommandsHandler from "./Commands";
 import * as request from "superagent";
 
 // Extending DiscordJS structures
-import "../handlers/structures/User";
-import "../handlers/structures/Guild";
-import "../handlers/structures/GuildMember";
+import "../structures/User";
+import "../structures/Guild";
+import "../structures/GuildMember";
 
 export default class BotClient extends Client {
     public config: typeof config = config;
