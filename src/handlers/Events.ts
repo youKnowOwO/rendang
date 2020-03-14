@@ -13,8 +13,7 @@ export default class EventLoader {
     public build(): BotClient {
         const eventFiles: string[] | undefined = readdirSync(this.path);
         for (const eventFile of eventFiles) {
-            const eventModule = require(`${this.path}/${eventFile}`).default;
-            const event: EventProp = new eventModule(this.client);
+            const event: EventProp = new (require(`${this.path}/${eventFile}`).default)(this.client);
             this.client.events.set(event.name, event);
             console.info(`Event ${event.name} has been loaded!`);
         }
