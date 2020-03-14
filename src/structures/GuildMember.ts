@@ -8,9 +8,8 @@ Structures.extend("GuildMember", DJSGuildMember => {
         public isDev?: boolean;
         constructor(client: BotClient, data: object, guild: Guild) {
             super(client, data, guild);
-            const user: User = this.user;
-            if (user.isDev) this.isDev = true;
-            else this.isDev = false;
+            // eslint-disable-next-line no-extra-parens
+            this.isDev = (this.user as User).isDev! ? true : false;
         }
     }
 

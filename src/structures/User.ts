@@ -6,11 +6,9 @@ Structures.extend("User", DJSUser => {
         public isDev?: boolean;
         constructor(client: BotClient, data: object) {
             super(client, data);
-            if (client.config.devs.includes(this.id)) this.isDev = true;
-            else this.isDev = false;
+            this.isDev = client.config.devs.includes(this.id);
         }
     }
 
     return User;
 });
-
