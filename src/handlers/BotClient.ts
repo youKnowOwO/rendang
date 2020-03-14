@@ -21,7 +21,7 @@ export default class BotClient extends Client {
     public request: typeof request;
     public events: Collection<string, EventProp>;
     public commands: Collection<string | undefined, CommandComponent | undefined>;
-    public aliases: Collection<string, string>;
+    public aliases: Collection<string | undefined, string>;
     public categories: Collection<string, Collection<string | undefined, CommandComponent | undefined>>;
     public helpMeta: Collection<string, helpMeta>;
     public cooldowns: Collection<string, Collection<Snowflake, number>>;

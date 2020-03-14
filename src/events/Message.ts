@@ -13,16 +13,13 @@ export default class MessageEvent {
         this.run = (message: Message): Message | void => {
             if (message.author.bot || !message.guild) { return undefined; }
 
-            const msg = message.content.toLowerCase();
-
-            if (msg.startsWith(message.guild.prefix) || msg.startsWith(message.client.config.prefix)) {
-                try {
-                    client.commandsHandler.handle(message);
-                } catch (e) {
-                    console.error(e);
-                }
+            try {
+                client.commandsHandler.handle(message);
+            } catch (e) {
+                console.error(e);
             }
-            if (msg.includes(`<@${client.user!.id}>`) || msg.includes(`<@!${client.user!.id}>`)) {
+
+            if (message.mentions.users.has(message.client.user!.id)) {
                 const embed = new MessageEmbed()
                     .setAuthor(`${client.user!.username}`, client.util.getAvatar(client.user))
                     .setColor("GREEN")
@@ -30,6 +27,8 @@ export default class MessageEvent {
                     .setTimestamp();
                 message.channel.send(embed);
             }
+
+            return message;
         };
     }
 }

@@ -10,6 +10,6 @@ export default interface Message extends DiscordJS.Message {
     member: GuildMember;
     client: BotClient;
     args: string[];
-    cmd: string;
+    cmd: string | undefined;
     flag: string[];
 }
