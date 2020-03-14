@@ -1,6 +1,6 @@
 {
   "name": "rendang",
-  "version": "1.0.6",
+  "version": "1.6.7",
   "description": " A (maybe) useful bot for your Discord server!",
   "main": "src/main.ts",
   "scripts": {
