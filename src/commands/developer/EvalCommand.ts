@@ -26,29 +26,26 @@ export default class EvalCommand extends BaseCommand {
 
     public async run(message: Message): Promise<Message> {
         const msg = message;
+        const client = this.client;
 
         const embed = new Embed()
             .setColor("GREEN")
             .addField("Input", "```js\n" + message.args.join(" ") + "```");
 
         try {
-            let code = message.args.slice(0).join(" ");
+            const code = message.args.slice(0).join(" ");
             if (!code) return this.client.util.argsMissing(message, "No js code was provided", this.help);
             let evaled;
-            if (code.includes("--silent") && code.includes("--async")) {
-                code = code.replace("--async", "")
-                    .replace("--silent", "");
+            if (message.flag.includes("silent") && message.flag.includes("async")) {
                 await eval(`(async function() {
                         ${code}
                     })()`);
                 return message;
-            } else if (code.includes("--async")) {
-                code = code.replace("--async", "");
+            } else if (message.flag.includes("async")) {
                 evaled = await eval(`(async function() {
                         ${code}
                     })()`);
-            } else if (code.includes("--silent")) {
-                code = code.replace("--silent", "");
+            } else if (message.flag.includes("silent")) {
                 await eval(code);
                 return message;
             } else {

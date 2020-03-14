@@ -34,7 +34,6 @@ export default class BaseCommand implements CommandComponent {
     public reload(): CommandComponent | void {
         delete require.cache[require.resolve(`${this.path}`)];
         const newCMD = new (require(`${this.path}`).default)();
-        console.log(newCMD);
         this.client.commands.get(this.help.name)!.run = newCMD.run;
         this.client.commands.get(this.help.name)!.help = newCMD.help;
         this.client.commands.get(this.help.name)!.conf = newCMD.conf;

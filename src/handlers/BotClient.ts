@@ -27,7 +27,6 @@ export default class BotClient extends Client {
     public cooldowns: Collection<string, Collection<Snowflake, number>>;
     public util: Util;
     public commandsHandler: CommandsHandler;
-    private loader: { events?: EventsLoader; modules?: ModulesLoader };
     constructor(opt: ClientOptions) {
         super(opt);
 
@@ -42,18 +41,16 @@ export default class BotClient extends Client {
         this.cooldowns = new Collection();
 
         this.commandsHandler = new CommandsHandler(this);
-        this.loader = {};
-        this.loader.events = new EventsLoader(this, resolve(__dirname, "..", "events"));
-        this.loader.modules = new ModulesLoader(this, resolve(__dirname, "..", "commands"));
     }
 
     public build(token: string | undefined): BotClient {
         this.login(token);
-        this.loader.events!.build();
+        const loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
+        loader.events.build();
         this.events.forEach((event: EventProp) => {
             this.on(event.name, event.run);
         });
-        this.on("ready", () => this.loader.modules!.build());
+        this.on("ready", () => loader.modules.build());
         return this;
     }
 

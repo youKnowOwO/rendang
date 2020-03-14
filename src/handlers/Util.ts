@@ -109,8 +109,8 @@ export default class Util {
     }
 
     public argsMissing(msg: Message, reason: string, cmd): Promise<any> {
-        const usage = cmd.usage ? `**${msg.guild.prefix}**${cmd.usage}` : "No usage provided.";
-        const example = cmd.example ? `**${msg.guild.prefix}**${cmd.example}` : "No example provided.";
+        const usage = cmd.usage ? `**${msg.guild.prefix}**${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild.prefix}**`)}` : "No usage provided.";
+        const example = cmd.example ? `**${msg.guild.prefix}**${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild.prefix}**`)}` : "No example provided.";
         const embed = new DiscordJS.MessageEmbed()
             .setAuthor(`It's not how you use ${cmd.name}`, `${this.client.config.staticServer}/images/596234507531845634.png`)
             .setColor("#FF0000")

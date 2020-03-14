@@ -38,13 +38,12 @@ export default class ModulesLoader {
                     files.forEach(file => {
                         if (!file.endsWith(".js") && !file.endsWith(".ts")) return undefined;
                         const prop: CommandComponent = new (require(`${this.path}/${category}/${file}`).default)(this.client, category, `${this.path}/${category}/${file}`);
-                        const cmdName: string = file.split(".")[0];
                         if (prop.conf.disable) disabledCommands.push(prop.help.name);
                         this.client.commands.set(prop.help.name, prop);
                         prop.conf.aliases.forEach(alias => {
                             this.client.aliases.set(alias, prop.help.name);
                         });
-                        moduleConf.cmds.push(cmdName);
+                        moduleConf.cmds.push(prop.help.name);
                     });
                     if (disabledCommands.length !== 0) console.info(`There are ${disabledCommands.length} command(s) disabled.`);
                     this.client.categories.set(category, this.client.commands.filter((cmd: CommandComponent | undefined) => cmd!.category === category));
