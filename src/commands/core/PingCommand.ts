@@ -31,7 +31,7 @@ export default class PingCommand extends BaseCommand {
             const embed = new MessageEmbed()
                 .setAuthor("🏓 PONG!", client.user!.displayAvatarURL())
                 .setColor(searchHex(apiLatency))
-                .addFields({name: "📶 Message Latency", value: `**\`${latency}\`** ms`, inline: true}, {name: "🌐 WebSocket Latency", value: `**\`${apiLatency}\`** ms`, inline: true})
+                .addFields({name: "📶 Message Latency", value: `**\`${latency}\`** ms`, inline: true}, {name: "🌐 WS Latency", value: `**\`${apiLatency}\`** ms`, inline: true})
                 .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL())
                 .setTimestamp();
 
