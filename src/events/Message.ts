@@ -15,7 +15,7 @@ export default class MessageEvent {
 
             const msg = message.content.toLowerCase();
 
-            if (msg.startsWith(message.guild.prefix) || msg.startsWith(message.guild.prefix)) {
+            if (msg.startsWith(message.guild.prefix) || msg.startsWith(message.client.config.prefix)) {
                 try {
                     client.commandsHandler.handle(message);
                 } catch (e) {

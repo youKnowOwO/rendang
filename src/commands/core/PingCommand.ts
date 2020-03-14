@@ -2,12 +2,11 @@
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
 import Message from "../../typings/Message";
-import BotConfig from "../../typings/BotConfig";
 import { MessageEmbed } from "discord.js";
 
 export default class PingCommand extends BaseCommand {
-    constructor() {
-        super();
+    constructor(client: BotClient, category: string, path: string) {
+        super(client, category, path);
         this.conf = {
             aliases: ["pong", "peng", "p", "pingpong"],
             cooldown: 3,
@@ -19,17 +18,18 @@ export default class PingCommand extends BaseCommand {
         this.help = {
             name: "ping",
             description: "Shows the ping of the bot to the Discord's server",
-            example: "ping",
-            usage: "ping"
+            usage: "ping",
+            example: ""
         };
     }
-    public run(client: BotClient, message: Message, args: string[], flags: string[], config: typeof BotConfig | null): any {
+
+    public run(message: Message): Message {
         const before = Date.now();
         message.channel.send("🏓 Pong!").then((msg: Message | Message | any) => {
             const latency = Date.now() - before;
-            const wsLatency = client.ws.ping.toFixed(0);
+            const wsLatency = this.client.ws.ping.toFixed(0);
             const embed = new MessageEmbed()
-                .setAuthor("🏓 PONG!", client.util.getAvatar(message.client.user))
+                .setAuthor("🏓 PONG!", this.client.util.getAvatar(message.client.user))
                 .setColor(this.searchHex(wsLatency))
                 .addFields({
                     name: "📶 Message Latency",
@@ -40,13 +40,13 @@ export default class PingCommand extends BaseCommand {
                     value: `**\`${wsLatency}\`** ms`,
                     inline: true
                 })
-                .setFooter(`Requested by: ${message.author.tag}`, client.util.getAvatar(message.author))
+                .setFooter(`Requested by: ${message.author.tag}`, this.client.util.getAvatar(message.author))
                 .setTimestamp();
 
             msg.edit(embed);
             msg.edit("");
         });
-        return undefined;
+        return message;
     }
 
     private searchHex(ms): string | number {

@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import BaseCommand from "../../handlers/structures/BaseCommand";
+import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
 import Message from "../../typings/Message";
-import BotConfig from "../../typings/BotConfig";
 
 export default class SchemaCommand extends BaseCommand {
-    constructor() {
-        super();
+    constructor(client: BotClient, category: string, path: string) {
+        super(client, category, path);
         this.conf = {
             aliases: [],
             cooldown: 3,
@@ -18,11 +17,12 @@ export default class SchemaCommand extends BaseCommand {
         this.help = {
             name: "cmd!",
             description: "!THIS IS A SCHEMA!",
-            example: "cmd",
-            usage: "cmd"
+            usage: "cmd <args>",
+            example: "cmd args"
         };
     }
-    public run(client: BotClient, message: Message, args: string[], flags: string[], config: typeof BotConfig | null): any {
-        return undefined;
+
+    public run(message: Message): Message {
+        return Message;
     }
 }

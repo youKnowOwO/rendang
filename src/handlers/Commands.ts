@@ -12,27 +12,14 @@ export default class CommandsHandler {
     }
 
     public handle(message: Message): CommandComponent | void {
-        const args: string[] | any = message.content.substring(message.guild.prefix.length).trim().split(" ");
-        const cmd: string = args.shift()!.toLowerCase();
-
-        const flags: string[] = [];
-        while (args[0] && (args[0].startsWith("--") || args[0].startsWith("-"))) {
-            let flag;
-            if (args[0].startsWith("--")) {
-                flag = args.shift()!.slice(2);
-            } else { flag = args.shift()!.slice(1); }
-            flags.push(flag);
-        }
-
-        // cooldown handler
-        const commandFile: CommandComponent | void = this.client.commands.get(cmd) || this.client.commands.get(this.client.aliases.get(cmd));
+        const commandFile: CommandComponent | void = this.client.commands.get(message.cmd) || this.client.commands.get(this.client.aliases.get(message.cmd));
         if (!commandFile || commandFile.conf.disable) { return undefined; }
-        if (!this.client.cooldowns.has(commandFile.help.name!)) {
-            this.client.cooldowns.set(commandFile.help.name!, new Collection());
+        if (!this.client.cooldowns.has(commandFile.help.name)) {
+            this.client.cooldowns.set(commandFile.help.name, new Collection());
         }
         const member: GuildMember = message.member;
         const now: number = Date.now();
-        const timestamps: Collection<Snowflake, number> | undefined = this.client.cooldowns.get(commandFile.help.name!);
+        const timestamps: Collection<Snowflake, number> | undefined = this.client.cooldowns.get(commandFile.help.name);
         const cooldownAmount = (commandFile.conf.cooldown || 3) * 1000;
         if (!timestamps!.has(member.id)) {
             timestamps!.set(member.id, now);
@@ -51,7 +38,7 @@ export default class CommandsHandler {
             setTimeout(() => timestamps!.delete(member.id), cooldownAmount);
         }
 
-        const command: CommandComponent = this.client.commands.get(cmd)! || this.client.commands.get(this.client.aliases.get(cmd))!;
+        const command: CommandComponent = this.client.commands.get(message.cmd)! || this.client.commands.get(this.client.aliases.get(message.cmd));
 
         if (command.conf.requiredPermissions.length !== 0) {
             let requiredPermissions: BitFieldResolvable<PermissionString> | any = "";
@@ -59,17 +46,17 @@ export default class CommandsHandler {
                 requiredPermissions = command.conf.requiredPermissions[0];
             } else { requiredPermissions = command.conf.requiredPermissions; }
             if (!message.member.permissions.has(requiredPermissions)) {
-                return this.permissionError(this.client, message, message.guild, message.member, requiredPermissions, command.help.name!);
+                return this.permissionError(this.client, message, message.guild, message.member, requiredPermissions, command.help.name);
             }
             if (!message.guild.members.resolve(this.client.user!.id)!.permissions.has(requiredPermissions)) {
-                return this.clientPermissionError(this.client, message, message.guild, message.member, requiredPermissions, command.help.name!);
+                return this.clientPermissionError(this.client, message, message.guild, message.member, requiredPermissions, command.help.name);
             }
         }
 
         // command handler
         try {
             if (command.conf.devOnly && !message.author.isDev) return undefined;
-            command.run(this.client, message, args, flags, this.client.config);
+            command.run(message);
         } catch (e) {
             console.error(e);
         } finally {

@@ -13,15 +13,17 @@ import * as request from "superagent";
 import "../structures/User";
 import "../structures/Guild";
 import "../structures/GuildMember";
+import "../structures/Message";
+import helpMeta from "../typings/helpMeta";
 
 export default class BotClient extends Client {
     public config: typeof config = config;
     public request: typeof request;
     public events: Collection<string, EventProp>;
-    public commands: Collection<string | undefined, CommandComponent>;
+    public commands: Collection<string | undefined, CommandComponent | undefined>;
     public aliases: Collection<string, string>;
-    public categories: Collection<string, object>;
-    public helpMeta: Collection<string, object>;
+    public categories: Collection<string, Collection<string | undefined, CommandComponent | undefined>>;
+    public helpMeta: Collection<string, helpMeta>;
     public cooldowns: Collection<string, Collection<Snowflake, number>>;
     public util: Util;
     public commandsHandler: CommandsHandler;
