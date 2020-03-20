@@ -60,7 +60,7 @@ export default class EvalCommand extends BaseCommand {
             if (output.length > 1024) {
                 const hastebin = await message.client.util.hastebin(output);
                 embed.addField("Output", hastebin);
-            } embed.addField("Output", "```js\n" + output + "```");
+            } else embed.addField("Output", "```js\n" + output + "```");
             message.channel.send(embed);
         } catch (e) {
             const error = this.clean(e);
