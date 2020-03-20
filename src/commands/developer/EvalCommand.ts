@@ -48,9 +48,7 @@ export default class EvalCommand extends BaseCommand {
             } else if (message.flag.includes("silent")) {
                 await eval(code);
                 return message;
-            } else {
-                evaled = await eval(code);
-            }
+            } else evaled = await eval(code);
 
             if (typeof evaled !== "string")
                 evaled = require("util").inspect(evaled, {
@@ -62,18 +60,14 @@ export default class EvalCommand extends BaseCommand {
             if (output.length > 1024) {
                 const hastebin = await message.client.util.hastebin(output);
                 embed.addField("Output", hastebin);
-            } else {
-                embed.addField("Output", "```js\n" + output + "```");
-            }
+            } embed.addField("Output", "```js\n" + output + "```");
             message.channel.send(embed);
         } catch (e) {
             const error = this.clean(e);
             if (error.length > 1024) {
                 const hastebin = await message.client.util.hastebin(error);
                 embed.addField("Error", hastebin);
-            } else {
-                embed.addField("Error", "```js\n" + error + "```");
-            }
+            } else embed.addField("Error", "```js\n" + error + "```");
             message.channel.send(embed);
         }
 
@@ -81,9 +75,7 @@ export default class EvalCommand extends BaseCommand {
     }
 
     private clean(text: string): string {
-        if (typeof text === "string")
-            return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-        else
-            return text;
+        if (typeof text === "string") return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+        else return text;
     }
 }
