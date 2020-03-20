@@ -26,8 +26,9 @@ export default class ModulesLoader {
                 moduleConf.cmds = [];
                 if (!moduleConf) return undefined;
                 this.client.helpMeta.set(category, moduleConf);
+                const regex = new RegExp("(?!json)(ts|js)", "g");
                 readdir(`${this.path}/${category}`, (err, files: string[]) => {
-                    console.info(`Found ${files.length - 1} command(s) from ${category}`);
+                    console.info(`Found ${files.filter(file => regex.exec(file) !== null).length} command(s) from ${category}`);
                     if (err) console.error(err);
                     const disabledCommands: string[] = [];
                     files.forEach(file => {
