@@ -4,7 +4,7 @@ import BotClient from "../../handlers/BotClient";
 import IMessage from "../../typings/Message";
 
 export default class Command extends BaseCommand {
-    constructor(client: BotClient, category: string, path: string) {
+    constructor(client: BotClient, readonly category: string, readonly path: string) {
         super(client, category, path);
         this.conf = {
             aliases: [],

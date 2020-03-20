@@ -3,12 +3,7 @@ import BotClient from "./BotClient";
 import EventProp from "../typings/Event";
 
 export default class EventLoader {
-    private client: BotClient;
-    private path: string;
-    constructor(client: BotClient, path: string) {
-        this.client = client;
-        this.path = path;
-    }
+    constructor(private client: BotClient, readonly path: string) {}
 
     public build(): BotClient {
         const eventFiles: string[] | undefined = readdirSync(this.path);
@@ -16,7 +11,7 @@ export default class EventLoader {
             if (eventFile.endsWith(".map")) continue;
             const event: EventProp = new (require(`${this.path}/${eventFile}`).default)(this.client);
             this.client.events.set(event.name, event);
-            this.client.on(event.name as any, (...args) => event.run(...args));
+            this.client.on(event.name, (...args) => event.run(...args));
             console.info(`Event ${event.name} has been loaded!`);
         }
         return this.client;

@@ -17,17 +17,17 @@ import "../structures/GuildMember";
 import "../structures/Message";
 
 export default class BotClient extends Client {
-    public config: typeof config = config;
-    public request: typeof request = request;
-    public events: Collection<string, EventProp> = new Collection();
-    public commands: Collection<string | undefined, CommandComponent | undefined> = new Collection();
-    public aliases: Collection<string | undefined, string> = new Collection();
-    public categories: Collection<string, Collection<string | undefined, CommandComponent | undefined>> = new Collection();
-    public helpMeta: Collection<string, helpMeta> = new Collection();
-    public cooldowns: Collection<string, Collection<Snowflake, number>> = new Collection();
-    public util: Util = new Util(this);
-    public commandsHandler: CommandsHandler = new CommandsHandler(this);
-    public loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
+    readonly config: typeof config = config;
+    readonly request: typeof request = request;
+    readonly events: Collection<string, EventProp> = new Collection();
+    readonly commands: Collection<string | undefined, CommandComponent | undefined> = new Collection();
+    readonly aliases: Collection<string | undefined, string> = new Collection();
+    readonly categories: Collection<string, Collection<string | undefined, CommandComponent | undefined>> = new Collection();
+    readonly helpMeta: Collection<string, helpMeta> = new Collection();
+    readonly cooldowns: Collection<string, Collection<Snowflake, number>> = new Collection();
+    readonly util: Util = new Util(this);
+    readonly commandsHandler: CommandsHandler = new CommandsHandler(this);
+    readonly loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
     constructor(opt: ClientOptions) { super(opt); }
 
     public build(token: string | undefined): BotClient {

@@ -5,7 +5,7 @@ import IMessage from "../../typings/Message";
 import { MessageEmbed, Message } from "discord.js";
 
 export default class PingCommand extends BaseCommand {
-    constructor(client: BotClient, category: string, path: string) {
+    constructor(client: BotClient, readonly category: string, readonly path: string) {
         super(client, category, path);
         this.conf = {
             aliases: ["pong", "peng", "p", "pingpong"],

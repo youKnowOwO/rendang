@@ -2,7 +2,7 @@ import IMessage from "./Message";
 import { PermissionString } from "discord.js";
 
 export default interface CommandComponent {
-    run: (message: IMessage) => any;
+    run(message: IMessage): any;
     category: string;
     path: string;
     reload: () => CommandComponent | void;

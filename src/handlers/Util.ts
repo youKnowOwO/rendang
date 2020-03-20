@@ -5,10 +5,7 @@ import Guild from "../typings/Guild";
 import CommandComponent from "../typings/Command";
 
 export default class Util {
-    private client: BotClient;
-    constructor(client: BotClient) {
-        this.client = client;
-    }
+    constructor(private client: BotClient) {}
 
     public base64 = {
         encode: (text: string): string => {

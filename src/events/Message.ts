@@ -4,8 +4,8 @@ import { MessageEmbed } from "discord.js";
 import EventProp from "../typings/Event";
 
 export default class MessageEvent implements EventProp {
-    public name: string;
-    constructor(private client: BotClient) { this.name = "message"; }
+    readonly name = "message";
+    constructor(private client: BotClient) {}
 
     public run(message: IMessage): IMessage | void {
         if (message.author.bot || !message.guild) return undefined;

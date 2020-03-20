@@ -4,15 +4,9 @@ import BotClient from "../handlers/BotClient";
 import Message from "../typings/Message";
 
 export default class BaseCommand implements CommandComponent {
-    public client: BotClient;
-    public category: string;
-    public path: string;
     public conf: CommandComponent["conf"];
     public help: CommandComponent["help"];
-    constructor(client: BotClient, category: string, path: string) {
-        this.client = client;
-        this.category = category;
-        this.path = path;
+    constructor(public client: BotClient, readonly category: string, readonly path: string) {
         this.conf = {
             aliases: [],
             cooldown: 3,
@@ -34,6 +28,7 @@ export default class BaseCommand implements CommandComponent {
     public reload(): CommandComponent | void {
         delete require.cache[require.resolve(`${this.path}`)];
         const newCMD = new (require(`${this.path}`).default)();
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         this.client.commands.get(this.help.name)!.run = newCMD.run;
         this.client.commands.get(this.help.name)!.help = newCMD.help;
         this.client.commands.get(this.help.name)!.conf = newCMD.conf;
