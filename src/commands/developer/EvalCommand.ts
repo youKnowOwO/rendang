@@ -34,7 +34,7 @@ export default class EvalCommand extends BaseCommand {
 
         try {
             const code = message.args.slice(0).join(" ");
-            if (!code) return this.client.util.argsMissing(message, "No js code was provided", this.help);
+            if (!code) return message.client.util.argsMissing(message, "No js code was provided", this.help);
             let evaled;
             if (message.flag.includes("silent") && message.flag.includes("async")) {
                 await eval(`(async function() {
@@ -58,9 +58,9 @@ export default class EvalCommand extends BaseCommand {
                 });
 
             const outputRaw = this.clean(evaled);
-            const output = outputRaw.replace(new RegExp(this.client.token!, "g"), "[TOKEN]");
+            const output = outputRaw.replace(new RegExp(message.client.token!, "g"), "[TOKEN]");
             if (output.length > 1024) {
-                const hastebin = await this.client.util.hastebin(output);
+                const hastebin = await message.client.util.hastebin(output);
                 embed.addField("Output", hastebin);
             } else {
                 embed.addField("Output", "```js\n" + output + "```");
@@ -69,7 +69,7 @@ export default class EvalCommand extends BaseCommand {
         } catch (e) {
             const error = this.clean(e);
             if (error.length > 1024) {
-                const hastebin = await this.client.util.hastebin(error);
+                const hastebin = await message.client.util.hastebin(error);
                 embed.addField("Error", hastebin);
             } else {
                 embed.addField("Error", "```js\n" + error + "```");

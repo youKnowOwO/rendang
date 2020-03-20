@@ -29,7 +29,7 @@ export default class PingCommand extends BaseCommand {
             const latency = Date.now() - before;
             const wsLatency = this.client.ws.ping.toFixed(0);
             const embed = new MessageEmbed()
-                .setAuthor("🏓 PONG!", this.client.util.getAvatar(message.client.user))
+                .setAuthor("🏓 PONG!", message.client.util.getAvatar(message.client.user))
                 .setColor(this.searchHex(wsLatency))
                 .addFields({
                     name: "📶 Message Latency",
@@ -40,7 +40,7 @@ export default class PingCommand extends BaseCommand {
                     value: `**\`${wsLatency}\`** ms`,
                     inline: true
                 })
-                .setFooter(`Requested by: ${message.author.tag}`, this.client.util.getAvatar(message.author))
+                .setFooter(`Requested by: ${message.author.tag}`, message.client.util.getAvatar(message.author))
                 .setTimestamp();
 
             msg.edit(embed);
