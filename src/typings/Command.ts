@@ -1,8 +1,8 @@
-import Message from "./Message";
-import DiscordJS from "discord.js";
+import IMessage from "./Message";
+import { PermissionString } from "discord.js";
 
 export default interface CommandComponent {
-    run: (message: Message) => any;
+    run: (message: IMessage) => any;
     category: string;
     path: string;
     reload: () => CommandComponent | void;
@@ -10,7 +10,7 @@ export default interface CommandComponent {
         aliases: string[];
         cooldown: number;
         devOnly: boolean;
-        requiredPermissions: DiscordJS.PermissionString[];
+        requiredPermissions: PermissionString[];
         disable: boolean;
     };
     help: {

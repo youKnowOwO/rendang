@@ -27,14 +27,13 @@ export default class BotClient extends Client {
     public cooldowns: Collection<string, Collection<Snowflake, number>> = new Collection();
     public util: Util = new Util(this);
     public commandsHandler: CommandsHandler = new CommandsHandler(this);
+    public loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
     constructor(opt: ClientOptions) { super(opt); }
 
     public build(token: string | undefined): BotClient {
+        this.loader.events.build();
+        this.on("ready", () => this.loader.modules.build());
         this.login(token);
-        const loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
-        loader.events.build();
-        this.on("ready", () => loader.modules.build());
         return this;
     }
-
 }

@@ -1,5 +1,5 @@
-import DiscordJS from "discord.js";
+import { Guild } from "discord.js";
 
-export default interface IGuild extends DiscordJS.Guild {
+export default interface IGuild extends Guild {
     prefix: string;
 }

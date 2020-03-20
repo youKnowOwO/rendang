@@ -1,6 +1,7 @@
 import BotClient from "../handlers/BotClient";
+import EventProp from "../typings/Event";
 
-export default class ReadyEvent {
+export default class ReadyEvent implements EventProp {
     public name: string;
     constructor(private client: BotClient) { this.name = "ready"; }
 

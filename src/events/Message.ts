@@ -8,7 +8,7 @@ export default class MessageEvent implements EventProp {
     constructor(private client: BotClient) { this.name = "message"; }
 
     public run(message: IMessage): IMessage | void {
-        if (message.author.bot || !message.guild) { return undefined; }
+        if (message.author.bot || !message.guild) return undefined;
 
         try {
             this.client.commandsHandler.handle(message);

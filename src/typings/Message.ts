@@ -1,15 +1,15 @@
-import DiscordJS from "discord.js";
-import Guild from "./Guild";
-import User from "./User";
-import GuildMember from "./GuildMember";
 import BotClient from "../handlers/BotClient";
+import { Message } from "discord.js";
+import IGuild from "./Guild";
+import IUser from "./User";
+import IGuildMember from "./GuildMember";
 
-export default interface IMessage extends DiscordJS.Message {
-    guild: Guild | null;
-    author: User;
-    member: GuildMember | null;
+export default interface IMessage extends Message {
+    guild: IGuild | null;
+    author: IUser;
+    member: IGuildMember | null;
     client: BotClient;
     args: string[];
-    cmd?: string | any;
+    cmd: string | any;
     flag: string[];
 }

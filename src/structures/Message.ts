@@ -8,7 +8,7 @@ import IGuildMember from "../typings/GuildMember";
 Structures.extend("Message", DJSMessage => {
     class Message extends DJSMessage implements IMessage {
         public args: string[];
-        public cmd?: string | any;
+        public cmd: string | any;
         public flag: string[];
         public guild!: IGuild | null;
         public member!: IGuildMember | null;

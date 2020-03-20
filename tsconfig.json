@@ -17,8 +17,6 @@
       ],
       "outDir": "./dist"
   },
-  "exclude": [
-      "node_modules",
-      "dist"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.js", "./src/**/*.json", "*.ts", "*.js"],
+  "exclude": ["node_modules/**", "tsconfig.json", "tslint.json", "README.md", ".env", "dist/**"]
 }

@@ -1,15 +1,17 @@
 import { Structures } from "discord.js";
 import BotClient from "../handlers/BotClient";
-import Guild from "../typings/Guild";
-import User from "../typings/User";
+import IGuild from "../typings/Guild";
+import IUser from "../typings/User";
+import IGuildMember from "../typings/GuildMember";
 
 Structures.extend("GuildMember", DJSGuildMember => {
-    class GuildMember extends DJSGuildMember {
+    class GuildMember extends DJSGuildMember implements IGuildMember {
         public isDev?: boolean;
-        constructor(client: BotClient, data: object, guild: Guild) {
+        public user!: IUser;
+        public guild!: IGuild;
+        constructor(client: BotClient, data: object, guild: IGuild) {
             super(client, data, guild);
-            // eslint-disable-next-line no-extra-parens
-            this.isDev = (this.user as User).isDev! ? true : false;
+            this.isDev = this.user.isDev! ? true : false;
         }
     }
 
