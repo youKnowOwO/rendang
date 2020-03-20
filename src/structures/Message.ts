@@ -1,5 +1,5 @@
 /* eslint-disable no-extra-parens */
-import { Structures } from "discord.js";
+import { Structures, TextChannel } from "discord.js";
 import BotClient from "../handlers/BotClient";
 import Guild from "../typings/Guild";
 
@@ -8,7 +8,7 @@ Structures.extend("Message", DJSMessage => {
         public args: string[];
         public cmd: string | null;
         public flag: string[];
-        constructor(client: BotClient, data: object, channel) {
+        constructor(client: BotClient, data: object, channel: TextChannel) {
             super(client, data, channel);
             this.args = [];
             this.cmd = null;

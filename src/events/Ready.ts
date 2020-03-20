@@ -4,7 +4,7 @@ export default class ReadyEvent {
     private client: BotClient;
     public name: string;
     public run: Function;
-    constructor(client) {
+    constructor(client: BotClient) {
         this.client = client;
         this.name = "ready";
 

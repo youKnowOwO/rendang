@@ -17,7 +17,7 @@ export default class PingCommand extends BaseCommand {
 
         this.help = {
             name: "ping",
-            description: "Shows the ping of the bot to the Discord's server",
+            description: "Shows the current ping of the bot",
             usage: "ping",
             example: ""
         };
@@ -49,7 +49,7 @@ export default class PingCommand extends BaseCommand {
         return message;
     }
 
-    private searchHex(ms): string | number {
+    private searchHex(ms: string | number): string | number {
         const listColorHex = [
             [0, 20, "#0DFF00"],
             [21, 50, "#0BC700"],

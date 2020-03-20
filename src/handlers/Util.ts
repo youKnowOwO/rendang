@@ -1,6 +1,8 @@
-import DiscordJS from "discord.js";
+import { UserResolvable, MessageEmbed, ImageURLOptions } from "discord.js";
 import BotClient from "./BotClient";
 import Message from "../typings/Message";
+import Guild from "../typings/Guild";
+import CommandComponent from "../typings/Command";
 
 export default class Util {
     private client: BotClient;
@@ -12,7 +14,7 @@ export default class Util {
         encode: (text: string): string => {
             return Buffer.from(text).toString("base64");
         },
-        decode: (base64): string => {
+        decode: (base64: string): string => {
             return Buffer.from(base64, "base64").toString();
         }
     };
@@ -21,7 +23,7 @@ export default class Util {
         encode: (text: string): string => {
             return Buffer.from(text).toString("hex");
         },
-        decode: (hex): string => {
+        decode: (hex: string): string => {
             return Buffer.from(hex, "hex").toString();
         }
     };
@@ -32,18 +34,18 @@ export default class Util {
         return `https://bin.hzmi.xyz/${body.key}`;
     }
 
-    public getAvatar(user: DiscordJS.UserResolvable | any): Promise<string> | string | any {
+    public getAvatar(user: UserResolvable | any): string {
         let isGif: any = this.client.users.resolve(user)!.displayAvatarURL().split(".");
         isGif = isGif[isGif.length - 1] === "gif";
-        const final: DiscordJS.ImageURLOptions = isGif ? { format: "gif" } : { format: "png" };
+        const final: ImageURLOptions = isGif ? { format: "gif" } : { format: "png" };
         return this.client.users.resolve(user)!.displayAvatarURL(final);
     }
 
-    public getGuildIcon(guild): Promise<string> | string | any {
+    public getGuildIcon(guild: Guild): string | any {
         if (guild.iconURL === null) return guild.iconURL();
-        let isGif: any = guild.iconURL().split(".");
+        let isGif: any = guild.iconURL()!.split(".");
         isGif = isGif[isGif.length - 1] === "gif";
-        const final: DiscordJS.ImageURLOptions = isGif ? { format: "gif" } : { format: "png" };
+        const final: ImageURLOptions = isGif ? { format: "gif" } : { format: "png" };
         return guild.iconURL(final);
     }
 
@@ -57,7 +59,7 @@ export default class Util {
         return Number(bytes / Math.pow(1024, i)).toFixed(1) + " " + sizes[i];
     }
 
-    public parseDur(ms): string {
+    public parseDur(ms: number): string {
         let seconds = ms / 1000;
         const days = parseInt((seconds / 86400).toString());
         seconds = seconds % 86400;
@@ -108,10 +110,10 @@ export default class Util {
         return string.split("")[0];
     }
 
-    public argsMissing(msg: Message, reason: string, cmd): Promise<any> {
+    public argsMissing(msg: Message, reason: string, cmd: CommandComponent["help"]): Promise<any> {
         const usage = cmd.usage ? `**${msg.guild.prefix}**${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild.prefix}**`)}` : "No usage provided.";
         const example = cmd.example ? `**${msg.guild.prefix}**${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild.prefix}**`)}` : "No example provided.";
-        const embed = new DiscordJS.MessageEmbed()
+        const embed = new MessageEmbed()
             .setAuthor(`It's not how you use ${cmd.name}`, `${this.client.config.staticServer}/images/596234507531845634.png`)
             .setColor("#FF0000")
             .setThumbnail(this.client.user!.displayAvatarURL())

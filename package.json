@@ -31,20 +31,23 @@
   },
   "homepage": "https://github.com/Hazmi35/rendang#readme",
   "devDependencies": {
+    "@types/mongoose": "^5.7.6",
     "@types/node": "^13.9.1",
     "@types/superagent": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/eslint-plugin-tslint": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
+    "tslint": "^6.1.0",
     "eslint": "^6.8.0",
     "ts-node": "^8.6.2",
-    "tslint": "^5.0.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "discord.js": "github:discordjs/discord.js",
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.9.5",
     "superagent": "^5.2.2",
-    "dotenv": "^8.2.0"
+    "ts-mongoose": "0.0.21"
   },
   "optionalDependencies": {
     "@discordjs/opus": "^0.1.0",
