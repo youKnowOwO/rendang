@@ -1,4 +1,4 @@
-import { Guild, VoiceState, Collection, Snowflake, VoiceStateManager, ChannelResolvable, GuildMemberResolvable, GuildMemberManager, UserResolvable, BanOptions, FetchMemberOptions, FetchMembersOptions } from "discord.js";
+import { Guild, VoiceState, Collection, Snowflake, VoiceStateManager, ChannelResolvable, GuildMemberResolvable, GuildMemberManager, UserResolvable, BanOptions, FetchMemberOptions, FetchMembersOptions, GuildManager } from "discord.js";
 import IGuildMember from "./GuildMember";
 import IUser from "./User";
 
@@ -12,6 +12,10 @@ export default interface IGuild extends Guild {
     setOwner(owner: GuildMemberResolvable, reason?: string): Promise<IGuild>;
 }
 
+export interface IGuildManager extends GuildManager {
+    cache: Collection<Snowflake, IGuild>;
+}
+
 interface IGuildMemberManager extends GuildMemberManager {
     cache: Collection<Snowflake, IGuildMember>;
     guild: IGuild;
@@ -23,7 +27,7 @@ interface IGuildMemberManager extends GuildMemberManager {
 }
 
 
-interface IVoiceState extends VoiceState {
+export interface IVoiceState extends VoiceState {
     guild: IGuild;
     member: IGuildMember | null;
     setDeaf(deaf: boolean, reason?: string): Promise<IGuildMember>;

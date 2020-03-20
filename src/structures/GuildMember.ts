@@ -7,6 +7,7 @@ Structures.extend("GuildMember", DJSGuildMember => {
         public user!: IGuildMember["user"];
         public guild!: IGuildMember["guild"];
         readonly isDev = this.user.isDev;
+        readonly voice!: IGuildMember["voice"];
         constructor(client: BotClient, data: object, guild: IGuildMember["guild"]) { super(client, data, guild); }
     }
 

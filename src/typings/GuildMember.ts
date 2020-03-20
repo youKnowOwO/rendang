@@ -1,9 +1,10 @@
 import { GuildMember } from "discord.js";
 import IUser from "./User";
-import IGuild from "./Guild";
+import IGuild, { IVoiceState } from "./Guild";
 
 export default interface IGuildMember extends GuildMember {
     user: IUser;
     isDev: boolean;
     guild: IGuild;
+    voice: IVoiceState;
 }
