@@ -4,12 +4,12 @@ import User from "./User";
 import GuildMember from "./GuildMember";
 import BotClient from "../handlers/BotClient";
 
-export default interface Message extends DiscordJS.Message {
-    guild: Guild;
+export default interface IMessage extends DiscordJS.Message {
+    guild: Guild | null;
     author: User;
-    member: GuildMember;
+    member: GuildMember | null;
     client: BotClient;
     args: string[];
-    cmd: string | undefined;
+    cmd?: string | any;
     flag: string[];
 }

@@ -2,7 +2,7 @@
 /* eslint-disable no-eval */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import Message from "../../typings/Message";
+import IMessage from "../../typings/Message";
 import { MessageEmbed as Embed } from "discord.js";
 
 export default class EvalCommand extends BaseCommand {
@@ -24,7 +24,7 @@ export default class EvalCommand extends BaseCommand {
         };
     }
 
-    public async run(message: Message): Promise<Message> {
+    public async run(message: IMessage): Promise<IMessage> {
         const msg = message;
         const client = this.client;
 

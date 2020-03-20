@@ -1,9 +1,9 @@
 import BotClient from "./BotClient";
-import Message from "../typings/Message";
-import Guild from "../typings/Guild";
-import { Collection, Snowflake, BitFieldResolvable, PermissionString, MessageEmbed } from "discord.js";
+import IMessage from "../typings/Message";
+import IGuild from "../typings/Guild";
 import CommandComponent from "../typings/Command";
-import GuildMember from "../typings/GuildMember";
+import IGuildMember from "../typings/GuildMember";
+import { Collection, Snowflake, BitFieldResolvable, PermissionString, MessageEmbed, Message } from "discord.js";
 
 export default class CommandsHandler {
     private client: BotClient;
@@ -11,31 +11,30 @@ export default class CommandsHandler {
         this.client = client;
     }
 
-    public handle(message: Message): CommandComponent | void {
+    public handle(message: IMessage): CommandComponent | void {
         const commandFile: CommandComponent | void = this.client.commands.get(message.cmd) || this.client.commands.get(this.client.aliases.get(message.cmd));
         if (!commandFile || commandFile.conf.disable) { return undefined; }
         if (!this.client.cooldowns.has(commandFile.help.name)) {
             this.client.cooldowns.set(commandFile.help.name, new Collection());
         }
-        const member: GuildMember = message.member;
         const now: number = Date.now();
         const timestamps: Collection<Snowflake, number> | undefined = this.client.cooldowns.get(commandFile.help.name);
         const cooldownAmount = (commandFile.conf.cooldown || 3) * 1000;
-        if (!timestamps!.has(member.id)) {
-            timestamps!.set(member.id, now);
-            if (message.author.isDev) { timestamps!.delete(member.user.id); }
+        if (!timestamps!.has(message.member!.id)) {
+            timestamps!.set(message.member!.id, now);
+            if (message.author.isDev) { timestamps!.delete(message.member!.user.id); }
         } else {
-            const expirationTime = timestamps!.get(member.id)! + cooldownAmount;
+            const expirationTime = timestamps!.get(message.member!.id)! + cooldownAmount;
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                message.channel.send(`**${member.user.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then((msg: Message | any) => {
-                    msg.delete(3400);
+                message.channel.send(`**${message.member!.user.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then((msg: IMessage | Message) => {
+                    msg.delete({ timeout:3400 });
                 });
                 return undefined;
             }
 
-            timestamps!.set(member.id, now);
-            setTimeout(() => timestamps!.delete(member.id), cooldownAmount);
+            timestamps!.set(message.member!.id, now);
+            setTimeout(() => timestamps!.delete(message.member!.id), cooldownAmount);
         }
 
         const command: CommandComponent = this.client.commands.get(message.cmd)! || this.client.commands.get(this.client.aliases.get(message.cmd));
@@ -45,11 +44,11 @@ export default class CommandsHandler {
             if (command.conf.requiredPermissions.length === 1) {
                 requiredPermissions = command.conf.requiredPermissions[0];
             } else { requiredPermissions = command.conf.requiredPermissions; }
-            if (!message.member.permissions.has(requiredPermissions)) {
-                return this.permissionError(this.client, message, message.guild, message.member, requiredPermissions, command.help.name);
+            if (!message.member!.permissions.has(requiredPermissions)) {
+                return this.permissionError(this.client, message, message.guild!, message.member!, requiredPermissions, command.help.name);
             }
-            if (!message.guild.members.resolve(this.client.user!.id)!.permissions.has(requiredPermissions)) {
-                return this.clientPermissionError(this.client, message, message.guild, message.member, requiredPermissions, command.help.name);
+            if (!message.guild!.members.resolve(this.client.user!.id)!.permissions.has(requiredPermissions)) {
+                return this.clientPermissionError(this.client, message, message.guild!, message.member!, requiredPermissions, command.help.name);
             }
         }
 
@@ -62,11 +61,11 @@ export default class CommandsHandler {
         } finally {
             // eslint-disable-next-line no-unsafe-finally
             if (command.conf.devOnly && !message.author.isDev) return undefined;
-            console.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild.name}`);
+            console.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild!.name}`);
         }
     }
 
-    private permissionError(client: BotClient, message: Message, guild: Guild, member: GuildMember, permission: string[], commandName: string): void {
+    private permissionError(client: BotClient, message: IMessage, guild: IGuild, member: IGuildMember, permission: string[], commandName: string): void {
         const embed = new MessageEmbed()
             .setAuthor(`You don't have permission${typeof permission === "object" ? "s" : ""} to execute this command`, client.util.getAvatar(client.user))
             .setColor("#FF0000")
@@ -84,7 +83,7 @@ export default class CommandsHandler {
         return undefined;
     }
 
-    private clientPermissionError(client: BotClient, message: Message, guild: Guild, member: GuildMember, permission: string[], commandName: string): void {
+    private clientPermissionError(client: BotClient, message: IMessage, guild: IGuild, member: IGuildMember, permission: string[], commandName: string): void {
         const embed = new MessageEmbed()
             .setAuthor(`I don't have permission${typeof permission === "object" ? "s" : ""} to execute this command,`, client.util.getAvatar(client.user))
             .setColor("#FF0000")

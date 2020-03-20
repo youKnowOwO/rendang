@@ -15,6 +15,7 @@ export default class EventLoader {
         for (const eventFile of eventFiles) {
             const event: EventProp = new (require(`${this.path}/${eventFile}`).default)(this.client);
             this.client.events.set(event.name, event);
+            this.client.on(event.name as any, (...args) => event.run(...args));
             console.info(`Event ${event.name} has been loaded!`);
         }
         return this.client;

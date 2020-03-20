@@ -1,34 +1,30 @@
 import BotClient from "../handlers/BotClient";
-import Message from "../typings/Message";
+import IMessage from "../typings/Message";
 import { MessageEmbed } from "discord.js";
+import EventProp from "../typings/Event";
 
-export default class MessageEvent {
-    private client: BotClient;
+export default class MessageEvent implements EventProp {
     public name: string;
-    public run: Function;
-    constructor(client: BotClient) {
-        this.client = client;
-        this.name = "message";
+    constructor(private client: BotClient) { this.name = "message"; }
 
-        this.run = (message: Message): Message | void => {
-            if (message.author.bot || !message.guild) { return undefined; }
+    public run(message: IMessage): IMessage | void {
+        if (message.author.bot || !message.guild) { return undefined; }
 
-            try {
-                client.commandsHandler.handle(message);
-            } catch (e) {
-                console.error(e);
-            }
+        try {
+            this.client.commandsHandler.handle(message);
+        } catch (e) {
+            console.error(e);
+        }
 
-            if (message.mentions.users.has(message.client.user!.id)) {
-                const embed = new MessageEmbed()
-                    .setAuthor(`${client.user!.username}`, client.util.getAvatar(client.user))
-                    .setColor("GREEN")
-                    .setDescription(`:wave: | Hello ${message.author.username}, my prefix for this server is \`${message.guild.prefix}\``)
-                    .setTimestamp();
-                message.channel.send(embed);
-            }
+        if (message.mentions.users.has(message.client.user!.id)) {
+            const embed = new MessageEmbed()
+                .setAuthor(`${this.client.user!.username}`, this.client.util.getAvatar(this.client.user))
+                .setColor("GREEN")
+                .setDescription(`:wave: | Hello ${message.author.username}, my prefix for this server is \`${message.guild.prefix}\``)
+                .setTimestamp();
+            message.channel.send(embed);
+        }
 
-            return message;
-        };
+        return message;
     }
 }

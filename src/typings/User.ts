@@ -1,5 +1,5 @@
 import DiscordJS from "discord.js";
 
-export default interface User extends DiscordJS.User {
+export default interface IUser extends DiscordJS.User {
     isDev?: boolean;
 }
