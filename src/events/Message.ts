@@ -18,7 +18,7 @@ export default class MessageEvent implements EventProp {
 
         if (message.mentions.users.has(message.client.user!.id)) {
             const embed = new MessageEmbed()
-                .setAuthor(`${this.client.user!.username}`, this.client.util.getAvatar(this.client.user))
+                .setAuthor(this.client.user!.username, this.client.util.getAvatar(this.client.user))
                 .setColor("GREEN")
                 .setDescription(`:wave: | Hello ${message.author.username}, my prefix for this server is \`${message.guild.prefix}\``)
                 .setTimestamp();
