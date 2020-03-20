@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { Promise } from "bluebird";
 global.Promise = Promise;
 
-dotenv.config({ path: "./src/.env" });
+dotenv.config({ path: "./.env" });
 
 const client = new Client({ disableMentions: "everyone", fetchAllMembers: true });
 

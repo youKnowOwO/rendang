@@ -1,7 +1,6 @@
-import BotClient from "../handlers/BotClient";
+import { ClientEvents } from "discord.js";
 
 export default interface EventProp {
-    client: BotClient;
-    name: string;
+    name: keyof ClientEvents;
     run: any;
 }

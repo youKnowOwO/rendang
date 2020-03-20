@@ -2,11 +2,11 @@
 /* eslint-disable no-eval */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import Message from "../../typings/Message";
+import IMessage from "../../typings/Message";
 import { MessageEmbed as Embed } from "discord.js";
 
 export default class EvalCommand extends BaseCommand {
-    constructor(client: BotClient, category: string, path: string) {
+    constructor(client: BotClient, readonly category: string, readonly path: string) {
         super(client, category, path);
         this.conf = {
             aliases: ["ev", "js-exec", "e", "evaluate"],
@@ -24,7 +24,7 @@ export default class EvalCommand extends BaseCommand {
         };
     }
 
-    public async run(message: Message): Promise<Message> {
+    public async run(message: IMessage): Promise<IMessage> {
         const msg = message;
         const client = this.client;
 
@@ -34,7 +34,7 @@ export default class EvalCommand extends BaseCommand {
 
         try {
             const code = message.args.slice(0).join(" ");
-            if (!code) return this.client.util.argsMissing(message, "No js code was provided", this.help);
+            if (!code) return message.client.util.argsMissing(message, "No js code was provided", this.help);
             let evaled;
             if (message.flag.includes("silent") && message.flag.includes("async")) {
                 await eval(`(async function() {
@@ -48,9 +48,7 @@ export default class EvalCommand extends BaseCommand {
             } else if (message.flag.includes("silent")) {
                 await eval(code);
                 return message;
-            } else {
-                evaled = await eval(code);
-            }
+            } else evaled = await eval(code);
 
             if (typeof evaled !== "string")
                 evaled = require("util").inspect(evaled, {
@@ -58,22 +56,18 @@ export default class EvalCommand extends BaseCommand {
                 });
 
             const outputRaw = this.clean(evaled);
-            const output = outputRaw.replace(new RegExp(this.client.token!, "g"), "[TOKEN]");
+            const output = outputRaw.replace(new RegExp(message.client.token!, "g"), "[TOKEN]");
             if (output.length > 1024) {
-                const hastebin = await this.client.util.hastebin(output);
+                const hastebin = await message.client.util.hastebin(output);
                 embed.addField("Output", hastebin);
-            } else {
-                embed.addField("Output", "```js\n" + output + "```");
-            }
+            } else embed.addField("Output", "```js\n" + output + "```");
             message.channel.send(embed);
         } catch (e) {
             const error = this.clean(e);
             if (error.length > 1024) {
-                const hastebin = await this.client.util.hastebin(error);
+                const hastebin = await message.client.util.hastebin(error);
                 embed.addField("Error", hastebin);
-            } else {
-                embed.addField("Error", "```js\n" + error + "```");
-            }
+            } else embed.addField("Error", "```js\n" + error + "```");
             message.channel.send(embed);
         }
 
@@ -81,9 +75,7 @@ export default class EvalCommand extends BaseCommand {
     }
 
     private clean(text: string): string {
-        if (typeof text === "string")
-            return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-        else
-            return text;
+        if (typeof text === "string") return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+        else return text;
     }
 }

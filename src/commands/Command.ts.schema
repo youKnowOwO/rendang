@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import Message from "../../typings/Message";
+import IMessage from "../../typings/Message";
 
-export default class SchemaCommand extends BaseCommand {
-    constructor(client: BotClient, category: string, path: string) {
+export default class Command extends BaseCommand {
+    constructor(client: BotClient, readonly category: string, readonly path: string) {
         super(client, category, path);
         this.conf = {
             aliases: [],
@@ -22,7 +22,7 @@ export default class SchemaCommand extends BaseCommand {
         };
     }
 
-    public run(message: Message): Message {
-        return Message;
+    public run(message: IMessage): IMessage {
+        return message;
     }
 }

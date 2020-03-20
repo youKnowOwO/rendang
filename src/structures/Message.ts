@@ -1,20 +1,22 @@
 /* eslint-disable no-extra-parens */
 import { Structures, TextChannel } from "discord.js";
 import BotClient from "../handlers/BotClient";
-import Guild from "../typings/Guild";
+import IMessage from "../typings/Message";
 
 Structures.extend("Message", DJSMessage => {
-    class Message extends DJSMessage {
-        public args: string[];
-        public cmd: string | null;
-        public flag: string[];
+    class Message extends DJSMessage implements IMessage {
+        public args: string[] = [];
+        public cmd: string | any = null;
+        public flag: string[] = [];
+        public guild!: IMessage["guild"] | null;
+        public member!: IMessage["member"] | null;
+        public client!: IMessage["client"];
+        public author!: IMessage["author"];
         constructor(client: BotClient, data: object, channel: TextChannel) {
             super(client, data, channel);
-            this.args = [];
-            this.cmd = null;
-            this.flag = [];
-            if (this.content.startsWith((this.guild as Guild).prefix) || this.content.startsWith((this.client as BotClient).config.prefix)) {
-                this.args = this.content.substring((this.guild as Guild).prefix.length).trim().split(" ");
+            if (!this.guild) return;
+            if (this.content.startsWith(this.guild.prefix) || this.content.startsWith(this.client.config.prefix)) {
+                this.args = this.content.substring(this.guild.prefix.length).trim().split(" ");
                 const cmd = this.args.shift()!.toLowerCase();
                 this.cmd = client.commands.has(cmd) ? cmd : null;
                 while (this.args[0] && (this.args[0].startsWith("--") || this.args[0].startsWith("-"))) {

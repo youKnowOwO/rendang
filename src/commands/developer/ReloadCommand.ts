@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import Message from "../../typings/Message";
+import IMessage from "../../typings/Message";
 import { MessageEmbed } from "discord.js";
-import CommandComponent from "../../typings/Command";
 
 export default class ReloadCommand extends BaseCommand {
-    constructor(client: BotClient, category: string, path: string) {
+    constructor(client: BotClient, readonly category: string, readonly path: string) {
         super(client, category, path);
         this.conf = {
             aliases: ["rl", "reloadcommand"],
@@ -24,7 +23,7 @@ export default class ReloadCommand extends BaseCommand {
         };
     }
 
-    public async run(message: Message): Promise<Message> {
+    public async run(message: IMessage): Promise<IMessage> {
         if (!message.flag[0]) return this.client.util.argsMissing(message, "Not enough arguments.", this.help);
 
         if (message.flag[0] === "all") {

@@ -4,12 +4,7 @@ import CommandComponent from "../typings/Command";
 import ModuleConf from "../typings/ModuleConf";
 
 export default class ModulesLoader {
-    private client: BotClient;
-    private path: string;
-    constructor(client: BotClient, path: string) {
-        this.client = client;
-        this.path = path;
-    }
+    constructor(private client: BotClient, readonly path: string) {}
 
     public build(): BotClient {
         readdir(this.path, (err, categories: string[]) => {

@@ -5,10 +5,7 @@ import Guild from "../typings/Guild";
 import CommandComponent from "../typings/Command";
 
 export default class Util {
-    private client: BotClient;
-    constructor(client: BotClient) {
-        this.client = client;
-    }
+    constructor(private client: BotClient) {}
 
     public base64 = {
         encode: (text: string): string => {
@@ -111,8 +108,8 @@ export default class Util {
     }
 
     public argsMissing(msg: Message, reason: string, cmd: CommandComponent["help"]): Promise<any> {
-        const usage = cmd.usage ? `**${msg.guild.prefix}**${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild.prefix}**`)}` : "No usage provided.";
-        const example = cmd.example ? `**${msg.guild.prefix}**${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild.prefix}**`)}` : "No example provided.";
+        const usage = cmd.usage ? `**${msg.guild!.prefix}**${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild!.prefix}**`)}` : "No usage provided.";
+        const example = cmd.example ? `**${msg.guild!.prefix}**${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild!.prefix}**`)}` : "No example provided.";
         const embed = new MessageEmbed()
             .setAuthor(`It's not how you use ${cmd.name}`, `${this.client.config.staticServer}/images/596234507531845634.png`)
             .setColor("#FF0000")
@@ -128,7 +125,7 @@ export default class Util {
                 value: example
             })
             .setTimestamp()
-            .setFooter(`Get more info about this command using ${msg.guild.prefix}help ${cmd.name}`, `${this.client.config.staticServer}/images/390511462361202688.png`);
+            .setFooter(`Get more info about this command using ${msg.guild!.prefix}help ${cmd.name}`, `${this.client.config.staticServer}/images/390511462361202688.png`);
 
         return msg.channel.send(embed);
     }

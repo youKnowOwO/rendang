@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import Message from "../../typings/Message";
-import { MessageEmbed } from "discord.js";
+import IMessage from "../../typings/Message";
+import { MessageEmbed, Message } from "discord.js";
 
 export default class PingCommand extends BaseCommand {
-    constructor(client: BotClient, category: string, path: string) {
+    constructor(client: BotClient, readonly category: string, readonly path: string) {
         super(client, category, path);
         this.conf = {
             aliases: ["pong", "peng", "p", "pingpong"],
@@ -23,13 +23,13 @@ export default class PingCommand extends BaseCommand {
         };
     }
 
-    public run(message: Message): Message {
+    public run(message: IMessage): IMessage {
         const before = Date.now();
-        message.channel.send("🏓 Pong!").then((msg: Message | Message | any) => {
+        message.channel.send("🏓 Pong!").then((msg: IMessage | Message) => {
             const latency = Date.now() - before;
             const wsLatency = this.client.ws.ping.toFixed(0);
             const embed = new MessageEmbed()
-                .setAuthor("🏓 PONG!", this.client.util.getAvatar(message.client.user))
+                .setAuthor("🏓 PONG!", message.client.util.getAvatar(message.client.user))
                 .setColor(this.searchHex(wsLatency))
                 .addFields({
                     name: "📶 Message Latency",
@@ -40,7 +40,7 @@ export default class PingCommand extends BaseCommand {
                     value: `**\`${wsLatency}\`** ms`,
                     inline: true
                 })
-                .setFooter(`Requested by: ${message.author.tag}`, this.client.util.getAvatar(message.author))
+                .setFooter(`Requested by: ${message.author.tag}`, message.client.util.getAvatar(message.author))
                 .setTimestamp();
 
             msg.edit(embed);
