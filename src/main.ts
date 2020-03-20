@@ -1,5 +1,7 @@
 import Client from "./handlers/BotClient";
 import dotenv from "dotenv";
+import { Promise } from "bluebird";
+global.Promise = Promise;
 
 dotenv.config({ path: "./src/.env" });
 

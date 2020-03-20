@@ -48,7 +48,7 @@ export default class BotClient extends Client {
         const loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
         loader.events.build();
         this.events.forEach((event: EventProp) => {
-            this.on(event.name, event.run);
+            this.on(event.name as any, event.run);
         });
         this.on("ready", () => loader.modules.build());
         return this;
