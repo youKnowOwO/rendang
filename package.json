@@ -37,6 +37,7 @@
     "kurasuta": "^2.0.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.5",
+    "random-meow": "^3.5.0",
     "superagent": "^5.2.2",
     "ts-mongoose": "0.0.21"
   },
