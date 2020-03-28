@@ -15,26 +15,26 @@ export default class CommandsHandler {
         const now = Date.now();
         const timestamps: Collection<Snowflake, number> | undefined = this.client.cooldowns.get(commandFile.help.name);
         const cooldownAmount = (commandFile.conf.cooldown || 3) * 1000;
-        if (!timestamps!.has(message.member!.id)) {
-            timestamps!.set(message.member!.id, now);
-            if (message.member!.isDev) timestamps!.delete(message.member!.user.id);
+        if (!timestamps!.has(message.author.id)) {
+            timestamps!.set(message.author.id, now);
+            if (message.author.isDev) timestamps!.delete(message.author.id);
         } else {
-            const expirationTime = timestamps!.get(message.member!.id)! + cooldownAmount;
+            const expirationTime = timestamps!.get(message.author.id)! + cooldownAmount;
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                message.channel.send(`**${message.member!.user.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then((msg: IMessage | Message) => {
+                message.channel.send(`**${message.author.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then((msg: IMessage | Message) => {
                     msg.delete({ timeout: 3500 });
                 });
                 return undefined;
             }
 
-            timestamps!.set(message.member!.id, now);
-            setTimeout(() => timestamps!.delete(message.member!.id), cooldownAmount);
+            timestamps!.set(message.author.id, now);
+            setTimeout(() => timestamps!.delete(message.author.id), cooldownAmount);
         }
 
         const command = this.client.commands.get(message.cmd)! || this.client.commands.get(this.client.aliases.get(message.cmd));
 
-        if (command.conf.requiredPermissions.length !== 0) {
+        if (command.conf.requiredPermissions.length !== 0 && message.channel.type !== "dm") {
             let requiredPermissions: BitFieldResolvable<PermissionString> | any = "";
             if (command.conf.requiredPermissions.length === 1) requiredPermissions = command.conf.requiredPermissions[0];
             else requiredPermissions = command.conf.requiredPermissions;
@@ -48,6 +48,7 @@ export default class CommandsHandler {
         }
 
         try {
+            if (command.conf.guildOnly && message.channel.type === "dm") return undefined;
             if (command.conf.devOnly && !message.author.isDev) return undefined;
             command.run(message);
         } catch (e) {
@@ -55,7 +56,9 @@ export default class CommandsHandler {
         } finally {
             // eslint-disable-next-line no-unsafe-finally
             if (command.conf.devOnly && !message.author.isDev) return undefined;
-            console.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild!.name}`);
+            // eslint-disable-next-line no-unsafe-finally
+            if (command.conf.guildOnly && message.channel.type === "dm") return undefined;
+            console.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild ? message.guild.name : "DM Channel"}`);
         }
     }
 

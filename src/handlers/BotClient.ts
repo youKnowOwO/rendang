@@ -10,6 +10,7 @@ import CommandsHandler from "./Commands";
 import * as request from "superagent";
 import helpMeta from "../typings/helpMeta";
 import { IGuildManager } from "../typings/Guild";
+import { IUserManager } from "../typings/User";
 
 // Extending DiscordJS structures
 import "../structures/User";
@@ -21,6 +22,7 @@ export default class BotClient extends Client {
     readonly config: typeof config = config;
     readonly request: typeof request = request;
     public guilds!: IGuildManager;
+    public users!: IUserManager;
     readonly events: Collection<string, EventProp> = new Collection();
     readonly commands: Collection<string | undefined, CommandComponent | undefined> = new Collection();
     readonly aliases: Collection<string | undefined, string> = new Collection();

@@ -8,7 +8,7 @@ export default class MessageEvent implements EventProp {
     constructor(private client: BotClient) {}
 
     public run(message: IMessage): IMessage | void {
-        if (message.author.bot || !message.guild) return undefined;
+        if (message.author.bot) return undefined;
 
         try {
             this.client.commandsHandler.handle(message);
@@ -20,7 +20,7 @@ export default class MessageEvent implements EventProp {
             const embed = new MessageEmbed()
                 .setAuthor(this.client.user!.username, this.client.util.getAvatar(this.client.user))
                 .setColor("GREEN")
-                .setDescription(`:wave: | Hello ${message.author.username}, my prefix for this server is \`${message.guild.prefix}\``)
+                .setDescription(`:wave: | Hello ${message.author.username}, my prefix for this server is \`${message.guild!.prefix}\``)
                 .setTimestamp();
             message.channel.send(embed);
         }

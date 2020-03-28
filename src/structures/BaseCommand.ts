@@ -11,6 +11,7 @@ export default class BaseCommand implements CommandComponent {
             aliases: [],
             cooldown: 3,
             devOnly: false,
+            guildOnly: false,
             requiredPermissions: [],
             disable: false
         };

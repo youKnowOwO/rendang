@@ -1,9 +1,9 @@
-import Client from "./handlers/BotClient";
+import Bluebird from "bluebird";
 import dotenv from "dotenv";
-import { Promise } from "bluebird";
-global.Promise = Promise;
+import Client from "./handlers/BotClient";
 
-dotenv.config({ path: "./.env" });
+global.Promise = Bluebird;
+dotenv.config();
 
 const client = new Client({ disableMentions: "everyone", fetchAllMembers: true });
 

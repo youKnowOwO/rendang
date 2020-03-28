@@ -11,6 +11,7 @@ export default class ReloadCommand extends BaseCommand {
             aliases: ["rl", "reloadcommand"],
             cooldown: 3,
             devOnly: true,
+            guildOnly: false,
             requiredPermissions: [],
             disable: false
         };

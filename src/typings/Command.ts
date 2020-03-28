@@ -10,6 +10,7 @@ export default interface CommandComponent {
         aliases: string[];
         cooldown: number;
         devOnly: boolean;
+        guildOnly: boolean;
         requiredPermissions: PermissionString[];
         disable: boolean;
     };
