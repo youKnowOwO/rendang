@@ -120,5 +120,4 @@ export default class Util {
 
         return msg.channel.send(embed);
     }
-
 }

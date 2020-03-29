@@ -2,6 +2,7 @@ import { PermissionString, Snowflake, Collection, GuildMemberResolvable, ClientE
 import BotClient from "../handlers/BotClient";
 import { MessageOptions } from "child_process";
 import { Adapter as DatabaseAdapter } from "../database";
+import { Model, Document } from "mongoose";
 
 export interface CommandComponent {
     run(message: IMessage): any;
@@ -139,5 +140,5 @@ export interface IUserManager extends UserManager {
 
 export interface IDatabases {
     Adapter: DatabaseAdapter;
-    guild?: any;
+    guild: Model<Document>;
 }
