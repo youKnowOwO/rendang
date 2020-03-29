@@ -14,7 +14,7 @@ export class LogWrapper extends EventEmitter {
         crit: "red",
         fatal: "red"
     };
-    constructor(console = true, client: BotClient) {
+    constructor(client: BotClient, console = true) {
         super();
         this.logger = createLogger({
             level: this.defaultLogLevel,
@@ -27,7 +27,7 @@ export class LogWrapper extends EventEmitter {
                 format.splat(),
                 format.json()
             ),
-            defaultMeta: { service: client.user!.username },
+            defaultMeta: { service: client.user ? client.user.username : client.config.botName },
             transports: [
                 new transports.File({ filename: "error.log", level: "error" }),
                 new transports.File({ filename: "logging.log" })

@@ -32,7 +32,7 @@ export default class BaseCommand implements CommandComponent {
         this.client.commands.get(this.help.name)!.run = newCMD.run;
         this.client.commands.get(this.help.name)!.help = newCMD.help;
         this.client.commands.get(this.help.name)!.conf = newCMD.conf;
-        console.info(`${this.help.name} command reloaded.`);
+        this.client.log.info(`${this.help.name} command reloaded.`);
         return this.client.commands.get(this.help.name);
     }
 }

@@ -12,7 +12,7 @@ export default class MessageEvent implements EventProp {
         try {
             this.client.commandsHandler.handle(message);
         } catch (e) {
-            console.error(e);
+            this.client.log.error(e);
         }
 
         if (message.mentions.users.has(message.client.user!.id)) {

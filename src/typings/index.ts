@@ -92,7 +92,6 @@ export interface IMessage extends Message {
 }
 
 export interface ITextChannel extends TextChannel {
-    prefix: string;
     guild: IGuild;
     client: BotClient;
     send(options: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions | APIMessage): Promise<IMessage>;
@@ -102,7 +101,6 @@ export interface ITextChannel extends TextChannel {
 }
 
 export interface IDMChannel extends DMChannel {
-    prefix: string;
     client: BotClient;
     send(options: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions | APIMessage): Promise<IMessage>;
     send(options: (MessageOptions & { split: true | SplitOptions; content: StringResolvable }) | APIMessage): Promise<IMessage[]>;
@@ -111,7 +109,6 @@ export interface IDMChannel extends DMChannel {
 }
 
 export interface INewsChannel extends NewsChannel {
-    prefix: string;
     client: BotClient;
     guild: IGuild;
     send(options: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions | APIMessage): Promise<IMessage>;

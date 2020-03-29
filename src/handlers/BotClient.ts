@@ -7,6 +7,7 @@ import ModulesLoader from "./Modules";
 import Util from "./Util";
 import CommandsHandler from "./Commands";
 import { IGuildManager, IUserManager, EventProp, CommandComponent, HelpMeta } from "../typings";
+import { LogWrapper } from "./LogWrapper";
 
 // Extending DiscordJS structures
 import "../structures/User";
@@ -28,6 +29,7 @@ export default class BotClient extends Client {
     readonly util: Util = new Util(this);
     readonly commandsHandler: CommandsHandler = new CommandsHandler(this);
     readonly loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
+    readonly log = new LogWrapper(this).logger;
     constructor(opt: ClientOptions) { super(opt); }
 
     public build(token: string | undefined): BotClient {

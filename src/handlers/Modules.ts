@@ -8,7 +8,7 @@ export default class ModulesLoader {
     public build(): BotClient {
         readdir(this.path, (err, categories: string[]) => {
             if (err) {
-                console.error(err);
+                this.client.log.error(err);
             }
             categories.forEach(category => {
                 if (category.endsWith(".schema")) {
@@ -18,7 +18,7 @@ export default class ModulesLoader {
                     }
                 }
             });
-            console.info(`Found ${categories.length} categories.`);
+            this.client.log.info(`Found ${categories.length} categories.`);
             categories.forEach(category => {
                 const moduleConf: ModuleConf = require(`${this.path}/${category}/module.json`);
                 moduleConf.path = `${this.path}/${category}`;
@@ -27,8 +27,8 @@ export default class ModulesLoader {
                 this.client.helpMeta.set(category, moduleConf);
                 const regex = new RegExp("(?!json)(ts|js)", "g");
                 readdir(`${this.path}/${category}`, (err, files: string[]) => {
-                    console.info(`Found ${files.filter(file => regex.exec(file) !== null).length} command(s) from ${category}`);
-                    if (err) console.error(err);
+                    this.client.log.info(`Found ${files.filter(file => regex.exec(file) !== null).length} command(s) from ${category}`);
+                    if (err) this.client.log.error(err);
                     const disabledCommands: string[] = [];
                     files.forEach(file => {
                         if (!file.endsWith(".js") && !file.endsWith(".ts")) return undefined;
@@ -40,7 +40,7 @@ export default class ModulesLoader {
                         });
                         moduleConf.cmds.push(prop.help.name);
                     });
-                    if (disabledCommands.length !== 0) console.info(`There are ${disabledCommands.length} command(s) disabled.`);
+                    if (disabledCommands.length !== 0) this.client.log.info(`There are ${disabledCommands.length} command(s) disabled.`);
                     this.client.categories.set(category, this.client.commands.filter((cmd: CommandComponent | undefined) => cmd!.category === category));
                 });
             });

@@ -49,13 +49,13 @@ export default class CommandsHandler {
             if (command.conf.devOnly && !message.author.isDev) return undefined;
             command.run(message);
         } catch (e) {
-            console.error(e);
+            this.client.log.error(e);
         } finally {
             // eslint-disable-next-line no-unsafe-finally
             if (command.conf.devOnly && !message.author.isDev) return undefined;
             // eslint-disable-next-line no-unsafe-finally
             if (command.conf.guildOnly && message.channel.type === "dm") return undefined;
-            console.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild ? message.guild.name : "DM Channel"}`);
+            this.client.log.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild ? message.guild.name : "DM Channel"}`);
         }
     }
 
