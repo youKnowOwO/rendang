@@ -8,7 +8,7 @@ export default class ModulesLoader {
     public build(): BotClient {
         readdir(this.path, (err, categories: string[]) => {
             if (err) {
-                this.client.log.error(err);
+                this.client.log.error("MODULES_LOADER_ERR: ", err);
             }
             categories.forEach(category => {
                 if (category.endsWith(".schema")) {
@@ -28,7 +28,7 @@ export default class ModulesLoader {
                 const regex = new RegExp("(?!json)(ts|js)", "g");
                 readdir(`${this.path}/${category}`, (err, files: string[]) => {
                     this.client.log.info(`Found ${files.filter(file => regex.exec(file) !== null).length} command(s) from ${category}`);
-                    if (err) this.client.log.error(err);
+                    if (err) this.client.log.error("MODULES_LOADER_ERR: ", err);
                     const disabledCommands: string[] = [];
                     files.forEach(file => {
                         if (!file.endsWith(".js") && !file.endsWith(".ts")) return undefined;

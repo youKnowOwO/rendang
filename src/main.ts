@@ -1,4 +1,4 @@
-import Bluebird from "bluebird";
+import { Promise as Bluebird } from "bluebird";
 import dotenv from "dotenv";
 import Client from "./handlers/BotClient";
 

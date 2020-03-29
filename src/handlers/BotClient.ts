@@ -35,12 +35,13 @@ export default class BotClient extends Client {
     constructor(opt: ClientOptions) {
         super(opt);
         this.db = {
-            Adapter: new DatabaseAdapter(process.env.MONGODB_URI as string, {}).connect(),
+            Adapter: new DatabaseAdapter(process.env.MONGODB_URI as string, {})
         };
     }
 
     public build(token: string | undefined): BotClient {
         this.loader.events.build();
+        this.db.Adapter.connect();
         this.on("ready", () => this.loader.modules.build());
         this.login(token);
         return this;

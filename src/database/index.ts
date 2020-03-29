@@ -17,8 +17,7 @@ export class Adapter extends EventEmitter {
         mongoose.connect(this.uris, this.options).then(() => {
             this.log.info("MongoDB Open Source Driver connected, succesfully synchronized with database...");
         }).catch(err => {
-            this.log.error("Could not connect to the database. Error:\n" + err);
-            process.exit(1);
+            this.log.error("DATABASE_ERR: ", err);
         });
         return this;
     }

@@ -57,7 +57,7 @@ export default class EvalCommand extends BaseCommand {
                 });
 
             const outputRaw = this.clean(evaled);
-            const output = outputRaw.replace(new RegExp(message.client.token!, "g"), "[TOKEN]");
+            const output = outputRaw.replace(new RegExp(process.env.DISCORD_TOKEN!, "g"), "[REDACTED]").replace(new RegExp(process.env.MONGODB_URI!, "g"), "[REDACTED]");
             if (output.length > 1024) {
                 const hastebin = await message.client.util.hastebin(output);
                 embed.addField("Output", hastebin);
