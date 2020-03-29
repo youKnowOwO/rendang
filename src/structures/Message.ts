@@ -14,9 +14,9 @@ Structures.extend("Message", DJSMessage => {
         public author!: IMessage["author"];
         constructor(client: BotClient, data: object, channel: TextChannel) {
             super(client, data, channel);
-            if (!this.guild) return;
-            if (this.content.startsWith(this.guild.prefix) || this.content.startsWith(this.client.config.prefix)) {
-                this.args = this.content.substring(this.guild.prefix.length).trim().split(" ");
+            const prefix = this.guild ? this.guild.prefix : this.client.config.prefix;
+            if (this.content.startsWith(prefix) || this.content.startsWith(this.client.config.prefix)) {
+                this.args = this.content.substring(prefix.length).trim().split(" ");
                 const cmd = this.args.shift()!.toLowerCase();
                 this.cmd = client.commands.has(cmd) ? cmd : null;
                 while (this.args[0] && (this.args[0].startsWith("--") || this.args[0].startsWith("-"))) {

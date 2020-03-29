@@ -1,4 +1,4 @@
-import { UserResolvable, MessageEmbed, ImageURLOptions } from "discord.js";
+import { UserResolvable, MessageEmbed } from "discord.js";
 import BotClient from "./BotClient";
 import Message from "../typings/Message";
 import Guild from "../typings/Guild";
@@ -32,18 +32,11 @@ export default class Util {
     }
 
     public getAvatar(user: UserResolvable | any): string {
-        let isGif: any = this.client.users.resolve(user)!.displayAvatarURL().split(".");
-        isGif = isGif[isGif.length - 1] === "gif";
-        const final: ImageURLOptions = isGif ? { format: "gif" } : { format: "png" };
-        return this.client.users.resolve(user)!.displayAvatarURL(final);
+        return this.client.users.resolve(user)!.displayAvatarURL({ format: "png", size: 2048, dynamic: true });
     }
 
     public getGuildIcon(guild: Guild): string | any {
-        if (guild.iconURL === null) return guild.iconURL();
-        let isGif: any = guild.iconURL()!.split(".");
-        isGif = isGif[isGif.length - 1] === "gif";
-        const final: ImageURLOptions = isGif ? { format: "gif" } : { format: "png" };
-        return guild.iconURL(final);
+        return guild.iconURL({ format: "png", size: 2048, dynamic: true });
     }
 
     public bytesToSize(bytes: number): string {

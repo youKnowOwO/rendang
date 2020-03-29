@@ -10,6 +10,7 @@ export default class Command extends BaseCommand {
             aliases: [],
             cooldown: 3,
             devOnly: false,
+            guildOnly: false,
             requiredPermissions: [],
             disable: false
         };

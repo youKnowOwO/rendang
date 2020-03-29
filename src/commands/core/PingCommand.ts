@@ -11,6 +11,7 @@ export default class PingCommand extends BaseCommand {
             aliases: ["pong", "peng", "p", "pingpong"],
             cooldown: 3,
             devOnly: false,
+            guildOnly: false,
             requiredPermissions: [],
             disable: false
         };

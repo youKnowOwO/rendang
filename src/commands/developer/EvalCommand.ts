@@ -12,6 +12,7 @@ export default class EvalCommand extends BaseCommand {
             aliases: ["ev", "js-exec", "e", "evaluate"],
             cooldown: 3,
             devOnly: true,
+            guildOnly: false,
             requiredPermissions: [],
             disable: false
         };
