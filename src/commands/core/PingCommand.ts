@@ -19,7 +19,7 @@ export default class PingCommand extends BaseCommand {
         this.help = {
             name: "ping",
             description: "Shows the current ping of the bot",
-            usage: "ping",
+            usage: "{prefix}ping",
             example: ""
         };
     }

@@ -19,8 +19,8 @@ export default class ReloadCommand extends BaseCommand {
         this.help = {
             name: "reload",
             description: "Only my developer can use this command",
-            usage: "reload --all\n{prefix}reload --category <CategoryName>\n{prefix}reload --command <CommandName>",
-            example: "reload --all\n{prefix}reload --category Core\n{prefix}reload --command ping"
+            usage: "{prefix}reload --all\n{prefix}reload --category <CategoryName>\n{prefix}reload --command <CommandName>",
+            example: "{prefix}reload --all\n{prefix}reload --category Core\n{prefix}reload --command ping"
         };
     }
 

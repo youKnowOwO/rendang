@@ -20,7 +20,7 @@ export default class EvalCommand extends BaseCommand {
         this.help = {
             name: "eval",
             description: "Only the developer can use this command.",
-            usage: "eval <some js code>",
+            usage: "{prefix}eval <some js code>",
             example: ""
         };
     }

@@ -99,8 +99,8 @@ export default class Util {
     }
 
     public argsMissing(msg: IMessage, reason: string, cmd: CommandComponent["help"]): Promise<any> {
-        const usage = cmd.usage ? `${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.channel.prefix}**`)}` : "No usage provided.";
-        const example = cmd.example ? `${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.channel.prefix}**`)}` : "No example provided.";
+        const usage = cmd.usage ? `${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild ? msg.guild.prefix : msg.client.config.prefix}**`)}` : "No usage provided.";
+        const example = cmd.example ? `${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild ? msg.guild.prefix : msg.client.config.prefix}**`)}` : "No example provided.";
         const embed = new MessageEmbed()
             .setAuthor(`It's not how you use ${cmd.name}`, `${this.client.config.staticServer}/images/596234507531845634.png`)
             .setColor("#FF0000")
@@ -116,7 +116,7 @@ export default class Util {
                 value: example
             })
             .setTimestamp()
-            .setFooter(`Get more info about this command using ${msg.channel.prefix}help ${cmd.name}`, `${this.client.config.staticServer}/images/390511462361202688.png`);
+            .setFooter(`Get more info about this command using ${msg.guild ? msg.guild.prefix : msg.client.config.prefix}help ${cmd.name}`, `${this.client.config.staticServer}/images/390511462361202688.png`);
 
         return msg.channel.send(embed);
     }
