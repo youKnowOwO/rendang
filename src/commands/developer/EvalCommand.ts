@@ -56,8 +56,7 @@ export default class EvalCommand extends BaseCommand {
                     depth: 0
                 });
 
-            const outputRaw = this.clean(evaled);
-            const output = outputRaw.replace(new RegExp(process.env.DISCORD_TOKEN!, "g"), "[REDACTED]").replace(new RegExp(process.env.MONGODB_URI!, "g"), "[REDACTED]");
+            const output = this.clean(evaled);
             if (output.length > 1024) {
                 const hastebin = await message.client.util.hastebin(output);
                 embed.addField("Output", hastebin);
@@ -76,7 +75,11 @@ export default class EvalCommand extends BaseCommand {
     }
 
     private clean(text: string): string {
-        if (typeof text === "string") return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-        else return text;
+        if (typeof text === "string") {
+            return text
+                .replace(new RegExp(process.env.DISCORD_TOKEN!, "g"), "[REDACTED]")
+                .replace("mongodb+srv://rendang:ZMojJBE3PJo6sBsk@bot-ffmks.gcp.mongodb.net/test?retryWrites=true&w=majority", "[REDACTED]")
+                .replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+        } else return text;
     }
 }

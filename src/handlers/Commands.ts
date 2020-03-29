@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-finally */
 import BotClient from "./BotClient";
 import { CommandComponent, IGuild, IGuildMember, IMessage } from "../typings";
 import { Collection, Snowflake, BitFieldResolvable, PermissionString, MessageEmbed } from "discord.js";
@@ -51,9 +52,7 @@ export default class CommandsHandler {
         } catch (e) {
             this.client.log.error("COMMAND_HANDLER_ERR: ", e);
         } finally {
-            // eslint-disable-next-line no-unsafe-finally
             if (command.conf.devOnly && !message.author.isDev) return undefined;
-            // eslint-disable-next-line no-unsafe-finally
             if (command.conf.guildOnly && message.channel.type === "dm") return undefined;
             this.client.log.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild ? message.guild.name : "DM Channel"}`);
         }

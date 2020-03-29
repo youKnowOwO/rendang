@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Client, ClientOptions, Collection, Snowflake } from "discord.js";
 import { resolve } from "path";
 import * as request from "superagent";
@@ -9,6 +10,7 @@ import CommandsHandler from "./Commands";
 import { IGuildManager, IUserManager, EventProp, CommandComponent, HelpMeta, IDatabases } from "../typings";
 import { LogWrapper } from "./LogWrapper";
 import { Adapter as DatabaseAdapter } from "../database";
+import GuildModel from "../database/models/Guild.model";
 
 // Extending DiscordJS structures
 import "../structures/User";
@@ -17,6 +19,7 @@ import "../structures/GuildMember";
 import "../structures/Message";
 
 export default class BotClient extends Client {
+    private _token = "n/a";
     readonly config = config;
     readonly request = request;
     public guilds!: IGuildManager;
@@ -35,15 +38,24 @@ export default class BotClient extends Client {
     constructor(opt: ClientOptions) {
         super(opt);
         this.db = {
-            Adapter: new DatabaseAdapter(process.env.MONGODB_URI as string, {})
+            Adapter: new DatabaseAdapter(process.env.MONGODB_URI, {}),
+            guild: GuildModel
         };
     }
 
-    public build(token: string | undefined): BotClient {
+    public build(): BotClient {
         this.loader.events.build();
         this.db.Adapter.connect();
         this.on("ready", () => this.loader.modules.build());
-        this.login(token);
+        this.login(this.getToken());
         return this;
+    }
+    // Getter Setter
+    public setToken(token: string): BotClient {
+        this._token = token;
+        return this;
+    }
+    public getToken(): string {
+        return this._token;
     }
 }

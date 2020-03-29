@@ -6,15 +6,15 @@ import { Logger } from "winston";
 
 export class Adapter extends EventEmitter {
     private log: Logger = new LogWrapper(`${botName}-MongoAdapter`).logger;
-    constructor(private uris: string, private options: mongoose.ConnectionOptions) {
+    constructor(private uri: string | undefined, private options: mongoose.ConnectionOptions) {
         super();
         Object.assign(options, { useNewUrlParser: true, useUnifiedTopology: true });
     }
     public getMongo(): typeof mongoose {
         return mongoose;
     }
-    public connect(): Adapter {
-        mongoose.connect(this.uris, this.options).then(() => {
+    public connect(uri?: string | undefined): Adapter {
+        mongoose.connect(uri ? uri : this.uri as string, this.options).then(() => {
             this.log.info("MongoDB Open Source Driver connected, succesfully synchronized with database...");
         }).catch(err => {
             this.log.error("DATABASE_ERR: ", err);
