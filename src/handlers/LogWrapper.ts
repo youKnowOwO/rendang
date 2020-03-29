@@ -1,7 +1,6 @@
 import { Logger, transports, format, createLogger } from "winston";
 import { EventEmitter } from "events";
 import chalk from "chalk";
-import BotClient from "./BotClient";
 
 export class LogWrapper extends EventEmitter {
     logger: Logger;
@@ -14,7 +13,7 @@ export class LogWrapper extends EventEmitter {
         crit: "red",
         fatal: "red"
     };
-    constructor(client: BotClient, console = true) {
+    constructor(serviceName: string, console = true) {
         super();
         this.logger = createLogger({
             level: this.defaultLogLevel,
@@ -27,7 +26,7 @@ export class LogWrapper extends EventEmitter {
                 format.splat(),
                 format.json()
             ),
-            defaultMeta: { service: client.user ? client.user.username : client.config.botName },
+            defaultMeta: { service: serviceName },
             transports: [
                 new transports.File({ filename: "error.log", level: "error" }),
                 new transports.File({ filename: "logging.log" })

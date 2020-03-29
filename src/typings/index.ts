@@ -1,6 +1,7 @@
 import { PermissionString, Snowflake, Collection, GuildMemberResolvable, ClientEvents, UserResolvable, BanOptions, FetchMemberOptions, FetchMembersOptions, Guild, GuildManager, GuildMemberManager, VoiceState, GuildMember, VoiceStateManager, Message, User, UserManager, ChannelResolvable, TextChannel, DMChannel, NewsChannel, MessageAdditions, APIMessage, SplitOptions, StringResolvable } from "discord.js";
 import BotClient from "../handlers/BotClient";
 import { MessageOptions } from "child_process";
+import { Adapter as DatabaseAdapter } from "../database";
 
 export interface CommandComponent {
     run(message: IMessage): any;
@@ -134,4 +135,9 @@ export interface IUserManager extends UserManager {
     fetch(id: Snowflake, cache? : boolean): Promise<IUser>;
     resolve(user: UserResolvable): IUser;
     resolveID(user: UserResolvable): Snowflake;
+}
+
+export interface IDatabases {
+    Adapter: DatabaseAdapter;
+    guild?: any;
 }
