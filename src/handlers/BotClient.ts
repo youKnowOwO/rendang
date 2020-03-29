@@ -1,11 +1,11 @@
 import { Client, ClientOptions, Collection, Snowflake } from "discord.js";
 import { resolve } from "path";
+import * as request from "superagent";
 import config from "../config.json";
 import EventsLoader from "./Events";
 import ModulesLoader from "./Modules";
 import Util from "./Util";
 import CommandsHandler from "./Commands";
-import * as request from "superagent";
 import { IGuildManager, IUserManager, EventProp, CommandComponent, HelpMeta } from "../typings";
 
 // Extending DiscordJS structures

@@ -2,7 +2,7 @@
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
 import { IMessage } from "../../typings";
-import { MessageEmbed, Message } from "discord.js";
+import { MessageEmbed } from "discord.js";
 
 export default class PingCommand extends BaseCommand {
     constructor(client: BotClient, readonly category: string, readonly path: string) {
@@ -26,7 +26,7 @@ export default class PingCommand extends BaseCommand {
 
     public run(message: IMessage): IMessage {
         const before = Date.now();
-        message.channel.send("🏓 Pong!").then((msg: IMessage | Message) => {
+        message.channel.send("🏓 Pong!").then((msg: IMessage) => {
             const latency = Date.now() - before;
             const wsLatency = this.client.ws.ping.toFixed(0);
             const embed = new MessageEmbed()

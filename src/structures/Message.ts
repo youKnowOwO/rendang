@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore  */
 /* eslint-disable no-extra-parens */
 import { Structures, TextChannel } from "discord.js";
 import BotClient from "../handlers/BotClient";
 import { IMessage } from "../typings";
 
 Structures.extend("Message", DJSMessage => {
+    // @ts-ignore
     class Message extends DJSMessage implements IMessage {
         public args: string[] = [];
         public cmd: string | any = null;
@@ -12,6 +14,7 @@ Structures.extend("Message", DJSMessage => {
         public member!: IMessage["member"] | null;
         public client!: IMessage["client"];
         public author!: IMessage["author"];
+        public TextChannel!: IMessage["channel"];
         constructor(client: BotClient, data: object, channel: TextChannel) {
             super(client, data, channel);
             const prefix = this.guild ? this.guild.prefix : this.client.config.prefix;

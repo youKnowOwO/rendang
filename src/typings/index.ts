@@ -1,5 +1,6 @@
-import { PermissionString, Snowflake, Collection, GuildMemberResolvable, ClientEvents, UserResolvable, BanOptions, FetchMemberOptions, FetchMembersOptions, Guild, GuildManager, GuildMemberManager, VoiceState, GuildMember, VoiceStateManager, Message, User, UserManager, ChannelResolvable } from "discord.js";
+import { PermissionString, Snowflake, Collection, GuildMemberResolvable, ClientEvents, UserResolvable, BanOptions, FetchMemberOptions, FetchMembersOptions, Guild, GuildManager, GuildMemberManager, VoiceState, GuildMember, VoiceStateManager, Message, User, UserManager, ChannelResolvable, TextChannel, DMChannel, NewsChannel, MessageAdditions, APIMessage, SplitOptions, StringResolvable } from "discord.js";
 import BotClient from "../handlers/BotClient";
+import { MessageOptions } from "child_process";
 
 export interface CommandComponent {
     run(message: IMessage): any;
@@ -81,12 +82,42 @@ export interface HelpMeta {
 
 export interface IMessage extends Message {
     guild: IGuild | null;
+    channel: ITextChannel | IDMChannel | INewsChannel;
     author: IUser;
     member: IGuildMember | null;
     client: BotClient;
     args: string[];
     cmd: string | any;
     flag: string[];
+}
+
+export interface ITextChannel extends TextChannel {
+    prefix: string;
+    guild: IGuild;
+    client: BotClient;
+    send(options: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions | APIMessage): Promise<IMessage>;
+    send(options: (MessageOptions & { split: true | SplitOptions; content: StringResolvable }) | APIMessage): Promise<IMessage[]>;
+    send(content: StringResolvable, options?: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions): Promise<IMessage>;
+    send(content: StringResolvable, options?: MessageOptions & { split: true | SplitOptions }): Promise<IMessage[]>;
+}
+
+export interface IDMChannel extends DMChannel {
+    prefix: string;
+    client: BotClient;
+    send(options: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions | APIMessage): Promise<IMessage>;
+    send(options: (MessageOptions & { split: true | SplitOptions; content: StringResolvable }) | APIMessage): Promise<IMessage[]>;
+    send(content: StringResolvable, options?: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions): Promise<IMessage>;
+    send(content: StringResolvable, options?: MessageOptions & { split: true | SplitOptions }): Promise<IMessage[]>;
+}
+
+export interface INewsChannel extends NewsChannel {
+    prefix: string;
+    client: BotClient;
+    guild: IGuild;
+    send(options: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions | APIMessage): Promise<IMessage>;
+    send(options: (MessageOptions & { split: true | SplitOptions; content: StringResolvable }) | APIMessage): Promise<IMessage[]>;
+    send(content: StringResolvable, options?: MessageOptions | (MessageOptions & { split?: false }) | MessageAdditions): Promise<IMessage>;
+    send(content: StringResolvable, options?: MessageOptions & { split: true | SplitOptions }): Promise<IMessage[]>;
 }
 
 export interface ModuleConf {
