@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
 import BotClient from "./BotClient";
-import EventProp from "../typings/Event";
+import { EventProp } from "../typings";
 
 export default class EventLoader {
     constructor(private client: BotClient, readonly path: string) {}

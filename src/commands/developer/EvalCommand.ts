@@ -2,7 +2,7 @@
 /* eslint-disable no-eval */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import IMessage from "../../typings/Message";
+import { IMessage } from "../../typings";
 import { MessageEmbed as Embed } from "discord.js";
 
 export default class EvalCommand extends BaseCommand {

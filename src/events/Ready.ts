@@ -1,5 +1,5 @@
 import BotClient from "../handlers/BotClient";
-import EventProp from "../typings/Event";
+import { EventProp } from "../typings";
 
 export default class ReadyEvent implements EventProp {
     readonly name = "ready";

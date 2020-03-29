@@ -1,8 +1,6 @@
 import { UserResolvable, MessageEmbed } from "discord.js";
 import BotClient from "./BotClient";
-import Message from "../typings/Message";
-import Guild from "../typings/Guild";
-import CommandComponent from "../typings/Command";
+import { IGuild, CommandComponent, IMessage } from "../typings";
 
 export default class Util {
     constructor(private client: BotClient) {}
@@ -35,7 +33,7 @@ export default class Util {
         return this.client.users.resolve(user)!.displayAvatarURL({ format: "png", size: 2048, dynamic: true });
     }
 
-    public getGuildIcon(guild: Guild): string | any {
+    public getGuildIcon(guild: IGuild): string | any {
         return guild.iconURL({ format: "png", size: 2048, dynamic: true });
     }
 
@@ -100,7 +98,7 @@ export default class Util {
         return string.split("")[0];
     }
 
-    public argsMissing(msg: Message, reason: string, cmd: CommandComponent["help"]): Promise<any> {
+    public argsMissing(msg: IMessage, reason: string, cmd: CommandComponent["help"]): Promise<any> {
         const usage = cmd.usage ? `**${msg.guild!.prefix}**${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild!.prefix}**`)}` : "No usage provided.";
         const example = cmd.example ? `**${msg.guild!.prefix}**${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild!.prefix}**`)}` : "No example provided.";
         const embed = new MessageEmbed()

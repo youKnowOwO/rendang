@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import CommandComponent from "../typings/Command";
+import { CommandComponent, IMessage } from "../typings";
 import BotClient from "../handlers/BotClient";
-import Message from "../typings/Message";
 
 export default class BaseCommand implements CommandComponent {
     public conf: CommandComponent["conf"];
@@ -24,7 +23,7 @@ export default class BaseCommand implements CommandComponent {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    public run(message: Message): any {}
+    public run(message: IMessage): any {}
 
     public reload(): CommandComponent | void {
         delete require.cache[require.resolve(`${this.path}`)];

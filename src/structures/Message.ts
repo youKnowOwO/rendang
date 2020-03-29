@@ -1,7 +1,7 @@
 /* eslint-disable no-extra-parens */
 import { Structures, TextChannel } from "discord.js";
 import BotClient from "../handlers/BotClient";
-import IMessage from "../typings/Message";
+import { IMessage } from "../typings";
 
 Structures.extend("Message", DJSMessage => {
     class Message extends DJSMessage implements IMessage {

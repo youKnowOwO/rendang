@@ -1,7 +1,6 @@
 import BotClient from "../handlers/BotClient";
-import IMessage from "../typings/Message";
+import { IMessage, EventProp } from "../typings";
 import { MessageEmbed } from "discord.js";
-import EventProp from "../typings/Event";
 
 export default class MessageEvent implements EventProp {
     readonly name = "message";

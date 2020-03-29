@@ -1,7 +1,6 @@
 import { readdir } from "fs";
 import BotClient from "./BotClient";
-import CommandComponent from "../typings/Command";
-import ModuleConf from "../typings/ModuleConf";
+import { CommandComponent, ModuleConf } from "../typings";
 
 export default class ModulesLoader {
     constructor(private client: BotClient, readonly path: string) {}

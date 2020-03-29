@@ -1,8 +1,5 @@
 import BotClient from "./BotClient";
-import IMessage from "../typings/Message";
-import IGuild from "../typings/Guild";
-import CommandComponent from "../typings/Command";
-import IGuildMember from "../typings/GuildMember";
+import { CommandComponent, IGuild, IGuildMember, IMessage } from "../typings";
 import { Collection, Snowflake, BitFieldResolvable, PermissionString, MessageEmbed, Message } from "discord.js";
 
 export default class CommandsHandler {

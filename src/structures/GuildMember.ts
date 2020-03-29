@@ -1,6 +1,6 @@
 import { Structures } from "discord.js";
 import BotClient from "../handlers/BotClient";
-import IGuildMember from "../typings/GuildMember";
+import { IGuildMember } from "../typings";
 
 Structures.extend("GuildMember", DJSGuildMember => {
     class GuildMember extends DJSGuildMember implements IGuildMember {

@@ -1,16 +1,12 @@
 import { Client, ClientOptions, Collection, Snowflake } from "discord.js";
-import config from "../config.json";
-import CommandComponent from "../typings/Command";
-import EventsLoader from "./Events";
-import EventProp from "../typings/Event";
 import { resolve } from "path";
+import config from "../config.json";
+import EventsLoader from "./Events";
 import ModulesLoader from "./Modules";
 import Util from "./Util";
 import CommandsHandler from "./Commands";
 import * as request from "superagent";
-import helpMeta from "../typings/helpMeta";
-import { IGuildManager } from "../typings/Guild";
-import { IUserManager } from "../typings/User";
+import { IGuildManager, IUserManager, EventProp, CommandComponent, HelpMeta } from "../typings";
 
 // Extending DiscordJS structures
 import "../structures/User";
@@ -27,7 +23,7 @@ export default class BotClient extends Client {
     readonly commands: Collection<string | undefined, CommandComponent | undefined> = new Collection();
     readonly aliases: Collection<string | undefined, string> = new Collection();
     readonly categories: Collection<string, Collection<string | undefined, CommandComponent | undefined>> = new Collection();
-    readonly helpMeta: Collection<string, helpMeta> = new Collection();
+    readonly helpMeta: Collection<string, HelpMeta> = new Collection();
     readonly cooldowns: Collection<string, Collection<Snowflake, number>> = new Collection();
     readonly util: Util = new Util(this);
     readonly commandsHandler: CommandsHandler = new CommandsHandler(this);
