@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-parens */
 import { Structures } from "discord.js";
 import BotClient from "../handlers/BotClient";
 import { IGuild } from "../typings";
@@ -18,7 +19,6 @@ Structures.extend("Guild", DJSGuild => {
             this.config = { prefix: client.config.prefix, allowDefaultPrefix: true };
             client.db.guild.findById(this.id).then(data => {
                 if (data === null) return this.create();
-                // eslint-disable-next-line no-extra-parens
                 delete (data.config as any).$init;
                 Object.assign(this.config, data.config);
             });
@@ -32,7 +32,6 @@ Structures.extend("Guild", DJSGuild => {
         public syncConfig(): IGuild["config"] {
             this.client.db.guild.findById(this.id).then(data => {
                 if (data === null) return this.create();
-                // eslint-disable-next-line no-extra-parens
                 delete (data.config as any).$init;
                 Object.assign(this.config, data.config);
             });
