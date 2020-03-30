@@ -17,10 +17,10 @@ Structures.extend("Guild", DJSGuild => {
             super(client, data);
             this.config = { prefix: client.config.prefix, allowDefaultPrefix: true };
             client.db.guild.findById(this.id).then(data => {
-                if (data === null) new client.db.guild({_id: this.id, config: { prefix: client.config.prefix, allowDefaultPrefix: true } }).save();
+                if (data === null) return new client.db.guild({_id: this.id, config: { prefix: client.config.prefix, allowDefaultPrefix: true } }).save();
                 // eslint-disable-next-line no-extra-parens
-                delete (data!.config as any).$init;
-                Object.assign(this.config, data!.config);
+                delete (data.config as any).$init;
+                Object.assign(this.config, data.config);
             });
         }
         public async updateConfig(config: IGuild["config"]): Promise<IGuild> {

@@ -14,7 +14,7 @@ export class Adapter extends EventEmitter {
         return mongoose;
     }
     public async connect(uri?: string | undefined): Promise<Adapter> {
-        this.log.info("Connecting to MongoDB...");
+        this.log.info("Connecting to MongoDB database...");
         await mongoose.connect(uri ? uri : this.uri as string, this.options).then(() => {
             this.log.info("MongoDB Open Source Driver connected, succesfully synchronized with database.");
         }).catch(err => {

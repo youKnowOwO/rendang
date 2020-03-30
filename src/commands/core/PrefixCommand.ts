@@ -33,7 +33,7 @@ export default class Command extends BaseCommand {
                 const embed = new MessageEmbed()
                     .setAuthor(message.guild!.name, this.client.util.getGuildIcon(message.guild!))
                     .setColor("#00FF00")
-                    .setDescription(`My prefix for this server is **${message.guild!.config.prefix}**`)
+                    .setDescription(`My prefix for this server is \`${message.guild!.config.prefix}\``)
                     .setTimestamp()
                     .setFooter(`${message.author.username}@${message.guild!.name}`, this.client.util.getAvatar(message.author));
                 message.channel.send(embed);
@@ -44,7 +44,7 @@ export default class Command extends BaseCommand {
                 const embed2 = new MessageEmbed()
                     .setAuthor(message.guild!.name, this.client.util.getGuildIcon(message.guild!))
                     .setColor("#00FF00")
-                    .setDescription(`Successfully changed the server prefix from **${lastPrefix}** to **${newPrefix}**`)
+                    .setDescription(`Successfully set the server prefix from \`${lastPrefix}\` to \`${newPrefix}\``)
                     .setTimestamp()
                     .setFooter(`${message.author.username}@${message.guild!.name}`, this.client.util.getAvatar(message.author));
                 message.channel.send(embed2);
@@ -54,13 +54,14 @@ export default class Command extends BaseCommand {
                 const embed3 = new MessageEmbed()
                     .setAuthor(message.guild!.name, this.client.util.getGuildIcon(message.guild!))
                     .setColor("#00FF00")
-                    .setDescription(`Successfully reset the server prefix to **${this.client.config.prefix}**`)
+                    .setDescription(`Successfully reset the server prefix to \`${this.client.config.prefix}\``)
                     .setTimestamp()
                     .setFooter(`${message.author.username}@${message.guild!.name}`, this.client.util.getAvatar(message.author));
                 message.channel.send(embed3);
                 break;
             case "allowDefault":
                 if (!message.args[0]) return this.invalidArgs(message, "Not enough arguments. (no boolean)");
+                if (message.guild!.config.prefix === message.client.config.prefix) return this.invalidArgs(message, "You should set a prefix before using this!");
                 const embed4 = new MessageEmbed()
                     .setAuthor(message.guild!.name, this.client.util.getGuildIcon(message.guild!))
                     .setColor("#00FF00")
