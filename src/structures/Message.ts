@@ -17,6 +17,7 @@ Structures.extend("Message", DJSMessage => {
         public TextChannel!: IMessage["channel"];
         constructor(client: BotClient, data: object, channel: TextChannel) {
             super(client, data, channel);
+            if (this.guild) this.guild.syncConfig();
             const prefix = this.guild ? this.guild.config.prefix : this.client.config.prefix;
             if (this.content.startsWith(prefix as string) || (this.content.startsWith(this.client.config.prefix) && this.guild!.config.allowDefaultPrefix)) {
                 this.args = this.content.substring(prefix!.length).trim().split(" ");

@@ -38,7 +38,7 @@ export interface IGuild extends Guild {
     voiceStates: IVoiceStateManager;
     setOwner(owner: GuildMemberResolvable, reason? : string): Promise<IGuild>;
     updateConfig(config: IGuild["config"]): Promise<IGuild>;
-    syncConfig(): IGuild;
+    syncConfig(): IGuild["config"];
     config: {
         prefix?: string;
         allowDefaultPrefix?: boolean;

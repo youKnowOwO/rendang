@@ -8,7 +8,6 @@ export default class MessageEvent implements EventProp {
 
     public run(message: IMessage): IMessage | void {
         if (message.author.bot) return undefined;
-        if (message.guild) message.guild.syncConfig();
 
         try {
             this.client.commandsHandler.handle(message);

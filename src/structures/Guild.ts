@@ -29,14 +29,14 @@ Structures.extend("Guild", DJSGuild => {
             data!.save();
             return this;
         }
-        public syncConfig(): IGuild {
+        public syncConfig(): IGuild["config"] {
             this.client.db.guild.findById(this.id).then(data => {
                 if (data === null) new this.client.db.guild({_id: this.id, config: { prefix: this.client.config.prefix, allowDefaultPrefix: true } }).save();
                 // eslint-disable-next-line no-extra-parens
                 delete (data!.config as any).$init;
                 Object.assign(this.config, data!.config);
             });
-            return this;
+            return this.config;
         }
     }
 
