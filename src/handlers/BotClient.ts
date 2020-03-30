@@ -7,10 +7,11 @@ import EventsLoader from "./Events";
 import ModulesLoader from "./Modules";
 import Util from "./Util";
 import CommandsHandler from "./Commands";
-import { IGuildManager, IUserManager, EventProp, CommandComponent, HelpMeta, IDatabases } from "../typings";
+import { IGuildManager, IUserManager, EventProp, CommandComponent, HelpMeta, IDatabases, IGuildModel } from "../typings";
 import { LogWrapper } from "./LogWrapper";
 import { Adapter as DatabaseAdapter } from "../database";
 import GuildModel from "../database/models/Guild.model";
+import { Model } from "mongoose";
 
 // Extending DiscordJS structures
 import "../structures/User";
@@ -39,7 +40,7 @@ export default class BotClient extends Client {
         super(opt);
         this.db = {
             Adapter: new DatabaseAdapter(process.env.MONGODB_URI, {}),
-            guild: GuildModel
+            guild: GuildModel as Model<IGuildModel>
         };
     }
 

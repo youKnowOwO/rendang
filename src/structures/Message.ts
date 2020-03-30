@@ -22,7 +22,7 @@ Structures.extend("Message", DJSMessage => {
                 this.args = this.content.substring(prefix.length).trim().split(" ");
                 const cmd = this.args.shift()!.toLowerCase();
                 this.cmd = client.commands.has(cmd) ? cmd : null;
-                while (this.args[0] && (this.args[0].startsWith("--") || this.args[0].startsWith("-"))) {
+                while (this.args[0] && ((this.args[0].startsWith("--") && this.args[0].length != 2) || (this.args[0].startsWith("-") && this.args[0].length != 1))) {
                     let flag;
                     if (this.args[0].startsWith("--")) {
                         flag = this.args.shift()!.slice(2);

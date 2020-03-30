@@ -38,6 +38,7 @@ export interface IGuild extends Guild {
     voice: IVoiceState | null;
     voiceStates: IVoiceStateManager;
     setOwner(owner: GuildMemberResolvable, reason? : string): Promise<IGuild>;
+    setPrefix(prefix: string): void;
 }
 
 export interface IGuildManager extends GuildManager {
@@ -140,5 +141,11 @@ export interface IUserManager extends UserManager {
 
 export interface IDatabases {
     Adapter: DatabaseAdapter;
-    guild: Model<Document>;
+    guild: Model<IGuildModel>;
+}
+export interface IGuildModel extends Document {
+    _id: string;
+    config: {
+        prefix: string;
+    };
 }
