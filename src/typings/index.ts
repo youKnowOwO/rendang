@@ -31,14 +31,18 @@ export interface EventProp {
 }
 
 export interface IGuild extends Guild {
-    prefix: string;
     me: IGuildMember;
     owner: IGuildMember;
     members: IGuildMemberManager;
     voice: IVoiceState | null;
     voiceStates: IVoiceStateManager;
     setOwner(owner: GuildMemberResolvable, reason? : string): Promise<IGuild>;
-    setPrefix(prefix: string): void;
+    updateConfig(config: IGuild["config"]): Promise<IGuild>;
+    syncConfig(): IGuild;
+    config: {
+        prefix?: string;
+        allowDefaultPrefix?: boolean;
+    };
 }
 
 export interface IGuildManager extends GuildManager {
@@ -145,7 +149,5 @@ export interface IDatabases {
 }
 export interface IGuildModel extends Document {
     _id: string;
-    config: {
-        prefix: string;
-    };
+    config: IGuild["config"];
 }

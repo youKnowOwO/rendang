@@ -35,7 +35,7 @@ export default class EvalCommand extends BaseCommand {
 
         try {
             const code = message.args.slice(0).join(" ");
-            if (!code) return message.client.util.argsMissing(message, "No js code was provided", this.help);
+            if (!code) return this.invalidArgs(message, "No js code was provided");
             let evaled;
             if (message.flag.includes("silent") && message.flag.includes("async")) {
                 await eval(`(async function() {

@@ -4,7 +4,6 @@ import { IGuild } from "../typings";
 
 Structures.extend("Guild", DJSGuild => {
     class Guild extends DJSGuild implements IGuild {
-        public prefix!: string;
         readonly me!: IGuild["me"];
         readonly owner!: IGuild["owner"];
         public member!: IGuild["member"];
@@ -13,18 +12,31 @@ Structures.extend("Guild", DJSGuild => {
         public voiceStates!: IGuild["voiceStates"];
         public setOwner!: IGuild["setOwner"];
         public client!: BotClient;
+        public config!: IGuild["config"];
         constructor(client: BotClient, data: object) {
             super(client, data);
+            this.config = { prefix: client.config.prefix, allowDefaultPrefix: true };
             client.db.guild.findById(this.id).then(data => {
-                if (data === null) new client.db.guild({_id: this.id, config: { prefix: client.config.prefix } }).save();
-                this.prefix = data ? data.config.prefix : client.config.prefix;
+                if (data === null) new client.db.guild({_id: this.id, config: { prefix: client.config.prefix, allowDefaultPrefix: true } }).save();
+                // eslint-disable-next-line no-extra-parens
+                delete (data!.config as any).$init;
+                Object.assign(this.config, data!.config);
             });
         }
-        public async setPrefix(prefix: string): Promise<void> {
+        public async updateConfig(config: IGuild["config"]): Promise<IGuild> {
             const data = await this.client.db.guild.findById(this.id);
-            data!.config.prefix = prefix;
+            data!.config = Object.assign(this.config, config);
             data!.save();
-            this.prefix = prefix;
+            return this;
+        }
+        public syncConfig(): IGuild {
+            this.client.db.guild.findById(this.id).then(data => {
+                if (data === null) new this.client.db.guild({_id: this.id, config: { prefix: this.client.config.prefix, allowDefaultPrefix: true } }).save();
+                // eslint-disable-next-line no-extra-parens
+                delete (data!.config as any).$init;
+                Object.assign(this.config, data!.config);
+            });
+            return this;
         }
     }
 

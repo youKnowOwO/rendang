@@ -44,10 +44,10 @@ export default class BotClient extends Client {
         };
     }
 
-    public build(): BotClient {
-        this.loader.events.build();
-        this.db.Adapter.connect();
+    public async build(): Promise<BotClient> {
         this.on("ready", () => this.loader.modules.build());
+        this.loader.events.build();
+        await this.db.Adapter.connect();
         this.login(this.getToken());
         return this;
     }

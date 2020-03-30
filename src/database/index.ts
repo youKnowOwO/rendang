@@ -13,9 +13,10 @@ export class Adapter extends EventEmitter {
     public getMongo(): typeof mongoose {
         return mongoose;
     }
-    public connect(uri?: string | undefined): Adapter {
-        mongoose.connect(uri ? uri : this.uri as string, this.options).then(() => {
-            this.log.info("MongoDB Open Source Driver connected, succesfully synchronized with database...");
+    public async connect(uri?: string | undefined): Promise<Adapter> {
+        this.log.info("Connecting to MongoDB...");
+        await mongoose.connect(uri ? uri : this.uri as string, this.options).then(() => {
+            this.log.info("MongoDB Open Source Driver connected, succesfully synchronized with database.");
         }).catch(err => {
             this.log.error("DATABASE_ERR: ", err);
         });
