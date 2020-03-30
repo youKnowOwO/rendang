@@ -1,6 +1,8 @@
 import { PermissionString, Snowflake, Collection, GuildMemberResolvable, ClientEvents, UserResolvable, BanOptions, FetchMemberOptions, FetchMembersOptions, Guild, GuildManager, GuildMemberManager, VoiceState, GuildMember, VoiceStateManager, Message, User, UserManager, ChannelResolvable, TextChannel, DMChannel, NewsChannel, MessageAdditions, APIMessage, SplitOptions, StringResolvable } from "discord.js";
 import BotClient from "../handlers/BotClient";
 import { MessageOptions } from "child_process";
+import { Adapter as DatabaseAdapter } from "../database";
+import { Model, Document } from "mongoose";
 
 export interface CommandComponent {
     run(message: IMessage): any;
@@ -29,13 +31,18 @@ export interface EventProp {
 }
 
 export interface IGuild extends Guild {
-    prefix: string;
     me: IGuildMember;
     owner: IGuildMember;
     members: IGuildMemberManager;
     voice: IVoiceState | null;
     voiceStates: IVoiceStateManager;
     setOwner(owner: GuildMemberResolvable, reason? : string): Promise<IGuild>;
+    updateConfig(config: IGuild["config"]): Promise<IGuild>;
+    syncConfig(): IGuild["config"];
+    config: {
+        prefix?: string;
+        allowDefaultPrefix?: boolean;
+    };
 }
 
 export interface IGuildManager extends GuildManager {
@@ -134,4 +141,13 @@ export interface IUserManager extends UserManager {
     fetch(id: Snowflake, cache? : boolean): Promise<IUser>;
     resolve(user: UserResolvable): IUser;
     resolveID(user: UserResolvable): Snowflake;
+}
+
+export interface IDatabases {
+    Adapter: DatabaseAdapter;
+    guild: Model<IGuildModel>;
+}
+export interface IGuildModel extends Document {
+    _id: string;
+    config: IGuild["config"];
 }

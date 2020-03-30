@@ -1,6 +1,7 @@
+/* eslint-disable no-unsafe-finally */
 import BotClient from "./BotClient";
 import { CommandComponent, IGuild, IGuildMember, IMessage } from "../typings";
-import { Collection, Snowflake, BitFieldResolvable, PermissionString, MessageEmbed, Message } from "discord.js";
+import { Collection, Snowflake, BitFieldResolvable, PermissionString, MessageEmbed } from "discord.js";
 
 export default class CommandsHandler {
     constructor(private client: BotClient) {}
@@ -19,7 +20,7 @@ export default class CommandsHandler {
             const expirationTime = timestamps!.get(message.author.id)! + cooldownAmount;
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                message.channel.send(`**${message.author.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then((msg: IMessage | Message) => {
+                message.channel.send(`**${message.author.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then((msg: IMessage) => {
                     msg.delete({ timeout: 3500 });
                 });
                 return undefined;
@@ -49,11 +50,9 @@ export default class CommandsHandler {
             if (command.conf.devOnly && !message.author.isDev) return undefined;
             command.run(message);
         } catch (e) {
-            this.client.log.error(e);
+            this.client.log.error("COMMAND_HANDLER_ERR: ", e);
         } finally {
-            // eslint-disable-next-line no-unsafe-finally
             if (command.conf.devOnly && !message.author.isDev) return undefined;
-            // eslint-disable-next-line no-unsafe-finally
             if (command.conf.guildOnly && message.channel.type === "dm") return undefined;
             this.client.log.info(`${message.author.tag} is using ${command.help.name} command on ${message.guild ? message.guild.name : "DM Channel"}`);
         }

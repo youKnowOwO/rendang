@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import IMessage from "../../typings/Message";
+import { IMessage } from "../../typings";
 
 export default class Command extends BaseCommand {
     constructor(client: BotClient, readonly category: string, readonly path: string) {

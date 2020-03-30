@@ -1,6 +1,6 @@
-import { UserResolvable, MessageEmbed } from "discord.js";
+import { UserResolvable } from "discord.js";
 import BotClient from "./BotClient";
-import { IGuild, CommandComponent, IMessage } from "../typings";
+import { IGuild } from "../typings";
 
 export default class Util {
     constructor(private client: BotClient) {}
@@ -97,28 +97,4 @@ export default class Util {
     public getFirstLetter(string: string): string {
         return string.split("")[0];
     }
-
-    public argsMissing(msg: IMessage, reason: string, cmd: CommandComponent["help"]): Promise<any> {
-        const usage = cmd.usage ? `${cmd.usage.replace(new RegExp("{prefix}", "g"), `**${msg.guild ? msg.guild.prefix : msg.client.config.prefix}**`)}` : "No usage provided.";
-        const example = cmd.example ? `${cmd.example.replace(new RegExp("{prefix}", "g"), `**${msg.guild ? msg.guild.prefix : msg.client.config.prefix}**`)}` : "No example provided.";
-        const embed = new MessageEmbed()
-            .setAuthor(`It's not how you use ${cmd.name}`, `${this.client.config.staticServer}/images/596234507531845634.png`)
-            .setColor("#FF0000")
-            .setThumbnail(this.client.user!.displayAvatarURL())
-            .addFields({
-                name: "<:info:596219360209797161> Reason:",
-                value: `**${reason}**`
-            }, {
-                name: "<:true:596220121429573653> Correct Usage :",
-                value: usage
-            }, {
-                name: "📃 Example :",
-                value: example
-            })
-            .setTimestamp()
-            .setFooter(`Get more info about this command using ${msg.guild ? msg.guild.prefix : msg.client.config.prefix}help ${cmd.name}`, `${this.client.config.staticServer}/images/390511462361202688.png`);
-
-        return msg.channel.send(embed);
-    }
-
 }
