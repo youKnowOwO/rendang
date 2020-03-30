@@ -99,6 +99,10 @@ jspm_packages/
 # TernJS port file
 .tern-port
 
-# Typescriot out directory
+# TypeScript out directory
 dist
 dist/
+
+# Git files
+.github/
+.git
