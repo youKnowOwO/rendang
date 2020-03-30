@@ -5,7 +5,7 @@ import BotClient from "../handlers/BotClient";
 import { IMessage } from "../typings";
 
 Structures.extend("Message", DJSMessage => {
-    // @ts-ignore
+    // @ts-ignore-next-line
     class Message extends DJSMessage implements IMessage {
         public args: string[] = [];
         public cmd: string | any = null;
