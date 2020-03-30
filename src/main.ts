@@ -4,7 +4,7 @@ import { config as LoadDotEnv } from "dotenv";
 import Client from "./handlers/BotClient";
 
 if (useBlueBird) global.Promise = Bluebird;
-if (useDotEnv) LoadDotEnv();
+if (useDotEnv) LoadDotEnv({ path: "./src/.env" });
 
 const client = new Client({ disableMentions: "everyone", fetchAllMembers: true })
     .setToken(process.env.DISCORD_TOKEN as string);
