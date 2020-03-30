@@ -17,7 +17,7 @@ Structures.extend("Guild", DJSGuild => {
             super(client, data);
             this.config = { prefix: client.config.prefix, allowDefaultPrefix: true };
             client.db.guild.findById(this.id).then(data => {
-                if (data === null) return new client.db.guild({_id: this.id, config: { prefix: client.config.prefix, allowDefaultPrefix: true } }).save();
+                if (data === null) return this.create();
                 // eslint-disable-next-line no-extra-parens
                 delete (data.config as any).$init;
                 Object.assign(this.config, data.config);
@@ -31,12 +31,15 @@ Structures.extend("Guild", DJSGuild => {
         }
         public syncConfig(): IGuild["config"] {
             this.client.db.guild.findById(this.id).then(data => {
-                if (data === null) new this.client.db.guild({_id: this.id, config: { prefix: this.client.config.prefix, allowDefaultPrefix: true } }).save();
+                if (data === null) return this.create();
                 // eslint-disable-next-line no-extra-parens
-                delete (data!.config as any).$init;
-                Object.assign(this.config, data!.config);
+                delete (data.config as any).$init;
+                Object.assign(this.config, data.config);
             });
             return this.config;
+        }
+        private create(): void {
+            new this.client.db.guild({_id: this.id, config: { prefix: this.client.config.prefix, allowDefaultPrefix: true } }).save();
         }
     }
 
