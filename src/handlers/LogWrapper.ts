@@ -28,8 +28,8 @@ export class LogWrapper extends EventEmitter {
             ),
             defaultMeta: { service: serviceName },
             transports: [
-                new transports.File({ filename: "error.log", level: "error" }),
-                new transports.File({ filename: "logging.log" })
+                new transports.File({ filename: "logs/error.log", level: "error" }),
+                new transports.File({ filename: "logs/logging.log" })
             ]
         });
 
