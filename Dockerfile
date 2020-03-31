@@ -17,9 +17,10 @@ RUN echo [INFO] Installing build deps... \
 && apk add --no-cache git curl \
 && echo [INFO] 3rd party packages installed!
 
-RUN echo [INFO] Node Version: $(node --version) \
-&& echo [INFO] npm Version: $(npm --version) \
-&& echo [INFO] Yarn Version: $(yarn --version) \
+RUN echo [INFO] Node version: $(node --version) \
+&& echo [INFO] npm version: $(npm --version) \
+&& echo [INFO] Yarn version: $(yarn --version) \
+&& echo [INFO] Git version: $(git --version) \
 && echo [INFO] Installing npm packages... \
 && yarn install \
 && echo [INFO] All npm packages installed! \
