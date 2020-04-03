@@ -1,27 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import { IMessage } from "../../typings";
+import { IMessage, CommandComponent } from "../../typings";
 import { MessageEmbed } from "discord.js";
 
 export default class Command extends BaseCommand {
-    constructor(client: BotClient, readonly category: string, readonly path: string) {
-        super(client, category, path);
-        this.conf = {
+    constructor(client: BotClient, readonly _config: CommandComponent["_config"]) {
+        super(client, _config, {
             aliases: ["pref", "server-prefix"],
             cooldown: 10,
-            devOnly: false,
             guildOnly: true,
             requiredPermissions: ["MANAGE_GUILD"],
-            disable: false
-        };
-
-        this.help = {
+        }, {
             name: "prefix",
             description: "Show or change the server prefix",
             usage: "{prefix}prefix --show\n{prefix}prefix --set <newPrefix>\n{prefix}prefix --reset\n{prefix}prefix --allowDefault <boolean>",
             example: "{prefix}prefix --show\n{prefix}prefix --set >\n{prefix}prefix --reset\n{prefix}prefix --allowDefault true"
-        };
+        });
     }
 
     public async run(message: IMessage): Promise<IMessage> {

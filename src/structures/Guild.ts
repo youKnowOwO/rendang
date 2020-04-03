@@ -42,5 +42,5 @@ Structures.extend("Guild", DJSGuild => {
         }
     }
 
-    return Guild;
+    return Guild; // TODO: Instead of this, why not return class Guild ?
 });

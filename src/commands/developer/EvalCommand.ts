@@ -2,27 +2,20 @@
 /* eslint-disable no-eval */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import { IMessage } from "../../typings";
+import { IMessage, CommandComponent } from "../../typings";
 import { MessageEmbed as Embed } from "discord.js";
 
 export default class EvalCommand extends BaseCommand {
-    constructor(client: BotClient, readonly category: string, readonly path: string) {
-        super(client, category, path);
-        this.conf = {
+    constructor(client: BotClient, readonly _config: CommandComponent["_config"]) {
+        super(client, _config, {
             aliases: ["ev", "js-exec", "e", "evaluate"],
-            cooldown: 3,
-            devOnly: true,
-            guildOnly: false,
-            requiredPermissions: [],
-            disable: false
-        };
-
-        this.help = {
+            cooldown: 0,
+            devOnly: true
+        }, {
             name: "eval",
             description: "Only the developer can use this command.",
-            usage: "{prefix}eval <some js code>",
-            example: ""
-        };
+            usage: "{prefix}eval <some js code>"
+        });
     }
 
     public async run(message: IMessage): Promise<IMessage> {

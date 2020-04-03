@@ -6,22 +6,26 @@ import { Model, Document } from "mongoose";
 
 export interface CommandComponent {
     run(message: IMessage): any;
-    category: string;
-    path: string;
+    _config: {
+        category: string;
+        path: string;
+    };
     reload(): CommandComponent | void;
     conf: {
-        aliases: string[];
-        cooldown: number;
-        devOnly: boolean;
-        guildOnly: boolean;
-        requiredPermissions: PermissionString[];
-        disable: boolean;
+        aliases?: string[];
+        cooldown?: number;
+        devOnly?: boolean;
+        guildOnly?: boolean;
+        requiredPermissions?: PermissionString[];
+        disable?: boolean;
+        path?: string;
     };
     help: {
-        name: string | any;
-        description: string | any;
-        usage: string | any;
-        example: string | any;
+        name: string;
+        category?: string;
+        description?: string;
+        usage?: string;
+        example?: string;
     };
 }
 

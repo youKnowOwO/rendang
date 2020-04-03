@@ -1,27 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import { IMessage } from "../../typings";
+import { IMessage, CommandComponent } from "../../typings";
 import { MessageEmbed } from "discord.js";
 
 export default class PingCommand extends BaseCommand {
-    constructor(client: BotClient, readonly category: string, readonly path: string) {
-        super(client, category, path);
-        this.conf = {
+    constructor(client: BotClient, readonly _config: CommandComponent["_config"]) {
+        super(client, _config, {
             aliases: ["pong", "peng", "p", "pingpong"],
-            cooldown: 3,
-            devOnly: false,
-            guildOnly: false,
-            requiredPermissions: [],
-            disable: false
-        };
-
-        this.help = {
+        }, {
             name: "ping",
-            description: "Shows the current ping of the bot",
-            usage: "{prefix}ping",
-            example: ""
-        };
+            description: "Shows the current ping of the bot.",
+            usage: "{prefix}ping"
+        });
     }
 
     public run(message: IMessage): IMessage {

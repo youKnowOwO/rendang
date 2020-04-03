@@ -1,26 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import { IMessage } from "../../typings";
+import { IMessage, CommandComponent } from "../../typings";
 
 export default class Command extends BaseCommand {
-    constructor(client: BotClient, readonly category: string, readonly path: string) {
-        super(client, category, path);
-        this.conf = {
-            aliases: [],
-            cooldown: 3,
-            devOnly: false,
-            guildOnly: false,
-            requiredPermissions: [],
-            disable: false
-        };
-
-        this.help = {
-            name: "cmd!",
-            description: "!THIS IS A SCHEMA!",
-            usage: "cmd <args>",
-            example: "cmd args"
-        };
+    constructor(client: BotClient, readonly _config: CommandComponent["_config"]) {
+        super(client, _config, {}, {
+            name: "{change-this}"
+        });
     }
 
     public run(message: IMessage): IMessage {

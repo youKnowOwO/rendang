@@ -32,8 +32,8 @@ export default class BotClient extends Client {
     readonly helpMeta: Collection<string, HelpMeta> = new Collection();
     readonly cooldowns: Collection<string, Collection<Snowflake, number>> = new Collection();
     readonly util = new Util(this);
-    readonly commandsHandler = new CommandsHandler(this);
     readonly loader = {events: new EventsLoader(this, resolve(__dirname, "..", "events")), modules: new ModulesLoader(this, resolve(__dirname, "..", "commands"))};
+    readonly commandsHandler = new CommandsHandler(this);
     readonly log = new LogWrapper(this.config.botName).logger;
     readonly db: IDatabases;
     constructor(opt: ClientOptions) {

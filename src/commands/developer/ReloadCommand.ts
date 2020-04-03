@@ -1,27 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
-import { IMessage } from "../../typings";
+import { IMessage, CommandComponent } from "../../typings";
 import { MessageEmbed } from "discord.js";
 
 export default class ReloadCommand extends BaseCommand {
-    constructor(client: BotClient, readonly category: string, readonly path: string) {
-        super(client, category, path);
-        this.conf = {
+    constructor(client: BotClient, readonly _config: CommandComponent["_config"]) {
+        super(client, _config, {
             aliases: ["rl", "reloadcommand"],
-            cooldown: 3,
-            devOnly: true,
-            guildOnly: false,
-            requiredPermissions: [],
-            disable: false
-        };
-
-        this.help = {
+            cooldown: 0,
+            devOnly: true
+        }, {
             name: "reload",
             description: "Only my developer can use this command",
             usage: "{prefix}reload --all\n{prefix}reload --category <CategoryName>\n{prefix}reload --command <CommandName>",
             example: "{prefix}reload --all\n{prefix}reload --category Core\n{prefix}reload --command ping"
-        };
+        });
     }
 
     public async run(message: IMessage): Promise<IMessage> {

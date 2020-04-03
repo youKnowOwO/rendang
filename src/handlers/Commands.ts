@@ -32,9 +32,9 @@ export default class CommandsHandler {
 
         const command = this.client.commands.get(message.cmd)! || this.client.commands.get(this.client.aliases.get(message.cmd));
 
-        if (command.conf.requiredPermissions.length !== 0 && message.channel.type !== "dm") {
+        if (command.conf.requiredPermissions!.length !== 0 && message.channel.type !== "dm") {
             let requiredPermissions: BitFieldResolvable<PermissionString> | any = "";
-            if (command.conf.requiredPermissions.length === 1) requiredPermissions = command.conf.requiredPermissions[0];
+            if (command.conf.requiredPermissions!.length === 1) requiredPermissions = command.conf.requiredPermissions![0];
             else requiredPermissions = command.conf.requiredPermissions;
 
             if (message.member!.id !== message.guild!.ownerID) {
