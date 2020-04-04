@@ -25,7 +25,7 @@ RUN echo [INFO] Installing build deps... \
 && echo [INFO] Everything looks okay. \
 && echo [INFO] Building TypeScript project... \
 && echo Using TypeScript version: $(node -p "require('typescript').version") \
-&& yarn run build \
+&& yarn build \
 && echo [INFO] Done building TypeScript project! \
 && echo [INFO] Pruning devDependencies... \
 && yarn install --production \
