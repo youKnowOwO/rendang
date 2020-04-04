@@ -5,7 +5,7 @@ import { Adapter as DatabaseAdapter } from "../database";
 import { Model, Document } from "mongoose";
 
 export interface CommandComponent {
-    execute(message: IMessage): IMessage | Promise<IMessage> | void;
+    execute(message: IMessage): any;
     _config: {
         category: string;
         path: string;
