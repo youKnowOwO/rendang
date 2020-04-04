@@ -4,6 +4,7 @@ import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
 import { IMessage, CommandComponent } from "../../typings";
 import { MessageEmbed as Embed } from "discord.js";
+import { parse as parseUrl } from "url";
 
 export default class EvalCommand extends BaseCommand {
     constructor(client: BotClient, readonly _config: CommandComponent["_config"]) {
@@ -71,7 +72,7 @@ export default class EvalCommand extends BaseCommand {
         if (typeof text === "string") {
             return text
                 .replace(new RegExp(process.env.DISCORD_TOKEN!, "g"), "[REDACTED]")
-                .replace(new RegExp(process.env.MONGODB_URI!, "g"), "[REDACTED]")
+                .replace(new RegExp(parseUrl(process.env.MONGODB_URI!).auth!, "g"), "[REDACTED]")
                 .replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
         } else return text;
     }
