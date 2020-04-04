@@ -2,15 +2,18 @@
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
 import { IMessage, CommandComponent } from "../../typings";
+import { MessageEmbed } from "discord.js";
 
-export default class Command extends BaseCommand {
+export default class PingCommand extends BaseCommand {
     constructor(client: BotClient, readonly _config: CommandComponent["_config"]) {
-        super(client, _config, {}, {
+        super(client, _config, {
+            aliases: []
+        }, {
             name: "{change-this}"
         });
     }
 
-    public run(message: IMessage): IMessage {
+    public execute(message: IMessage): IMessage {
         return message;
     }
 }
