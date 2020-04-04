@@ -18,8 +18,8 @@ export default class ReloadCommand extends BaseCommand {
         });
     }
 
-    public async run(message: IMessage): Promise<IMessage> {
-        if (!message.flag[0]) return this.invalidArgs(message, "Not enough arguments.");
+    public async execute(message: IMessage): Promise<IMessage> {
+        if (!message.flag[0]) return this.invalid(message, "Not enough arguments.");
 
         if (message.flag[0] === "all") {
             const embed = new MessageEmbed()
@@ -36,9 +36,9 @@ export default class ReloadCommand extends BaseCommand {
         }
 
         if (message.flag[0] === "category") {
-            if (!message.args[0]) return this.invalidArgs(message, "No args was passed.");
+            if (!message.args[0]) return this.invalid(message, "No args was passed.");
             const category = message.args[0].toLowerCase();
-            if (!this.client.categories.has(category)) return this.invalidArgs(message, "No such category called: " + category + ".");
+            if (!this.client.categories.has(category)) return this.invalid(message, "No such category called: " + category + ".");
             const commands = this.client.categories.get(category)!.keyArray();
             const embed = new MessageEmbed()
                 .setColor("#00FF00")
@@ -52,15 +52,15 @@ export default class ReloadCommand extends BaseCommand {
         }
 
         if (message.flag[0] === "command") {
-            if (!message.args[0]) return this.invalidArgs(message, "No args was passed.");
+            if (!message.args[0]) return this.invalid(message, "No args was passed.");
             let command: string | undefined = message.args[0].toLowerCase();
-            if (this.client.commands.has(command) && this.client.aliases.has(command)) return this.invalidArgs(message, "No such command called: " + command + ".");
+            if (this.client.commands.has(command) && this.client.aliases.has(command)) return this.invalid(message, "No such command called: " + command + ".");
             if (this.client.aliases.has(command)) command = this.client.aliases.get(command);
             const embed = new MessageEmbed()
                 .setColor("#00FF00")
                 .setDescription(`Reloading ${command} command...`);
             const MSG = await message.channel.send(embed);
-            this.client.commands.get(command)!.reload();
+            this.client.commands.get(command!)!.reload();
             embed.setDescription(`${command} command reloaded.`);
             MSG.edit(embed);
         }

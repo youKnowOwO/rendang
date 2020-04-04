@@ -24,7 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install --no-optional
-    - run: npm test
+    - run: node -v && npm -v && yarn -v
+    - run: yarn install --ignore-optional
+    - run: yarn test
+    - run: yarn run rimraf dist
       env:
         CI: true

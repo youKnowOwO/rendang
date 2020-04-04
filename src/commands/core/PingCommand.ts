@@ -15,7 +15,7 @@ export default class PingCommand extends BaseCommand {
         });
     }
 
-    public run(message: IMessage): IMessage {
+    public execute(message: IMessage): IMessage {
         const before = Date.now();
         message.channel.send("🏓 Pong!").then((msg: IMessage) => {
             const latency = Date.now() - before;

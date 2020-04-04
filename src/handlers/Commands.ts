@@ -7,12 +7,12 @@ export default class CommandsHandler {
     constructor(private client: BotClient) {}
 
     public handle(message: IMessage): CommandComponent | void {
-        const commandFile: CommandComponent | void = this.client.commands.get(message.cmd) || this.client.commands.get(this.client.aliases.get(message.cmd));
-        if (!commandFile || commandFile.conf.disable) return undefined;
-        if (!this.client.cooldowns.has(commandFile.help.name)) this.client.cooldowns.set(commandFile.help.name, new Collection());
+        const command: CommandComponent | void = this.client.commands.get(message.cmd) || this.client.commands.get(this.client.aliases.get(message.cmd)!);
+        if (!command || command.conf.disable) return undefined;
+        if (!this.client.cooldowns.has(command.help.name)) this.client.cooldowns.set(command.help.name, new Collection());
         const now = Date.now();
-        const timestamps: Collection<Snowflake, number> | undefined = this.client.cooldowns.get(commandFile.help.name);
-        const cooldownAmount = (commandFile.conf.cooldown || 3) * 1000;
+        const timestamps: Collection<Snowflake, number> | undefined = this.client.cooldowns.get(command.help.name);
+        const cooldownAmount = (command.conf.cooldown || 3) * 1000;
         if (!timestamps!.has(message.author.id)) {
             timestamps!.set(message.author.id, now);
             if (message.author.isDev) timestamps!.delete(message.author.id);
@@ -30,8 +30,6 @@ export default class CommandsHandler {
             setTimeout(() => timestamps!.delete(message.author.id), cooldownAmount);
         }
 
-        const command = this.client.commands.get(message.cmd)! || this.client.commands.get(this.client.aliases.get(message.cmd));
-
         if (command.conf.requiredPermissions!.length !== 0 && message.channel.type !== "dm") {
             let requiredPermissions: BitFieldResolvable<PermissionString> | any = "";
             if (command.conf.requiredPermissions!.length === 1) requiredPermissions = command.conf.requiredPermissions![0];
@@ -48,7 +46,7 @@ export default class CommandsHandler {
         try {
             if (command.conf.guildOnly && message.channel.type === "dm") return undefined;
             if (command.conf.devOnly && !message.author.isDev) return undefined;
-            command.run(message);
+            command.execute(message);
         } catch (e) {
             this.client.log.error("COMMAND_HANDLER_ERR: ", e);
         } finally {

@@ -19,7 +19,7 @@ export default class Command extends BaseCommand {
         });
     }
 
-    public async run(message: IMessage): Promise<IMessage> {
+    public async execute(message: IMessage): Promise<IMessage> {
         const lastPrefix = message.guild!.config.prefix;
         const newPrefix = message.args[0] ? message.args[0].toString().toLowerCase() : undefined;
 
@@ -34,7 +34,7 @@ export default class Command extends BaseCommand {
                 message.channel.send(embed);
                 break;
             case "set":
-                if (!newPrefix) return this.invalidArgs(message, "Not enough arguments. (no newPrefix)");
+                if (!newPrefix) return this.invalid(message, "Not enough arguments. (no newPrefix)");
                 message.guild!.updateConfig({ prefix: newPrefix });
                 const embed2 = new MessageEmbed()
                     .setAuthor(message.guild!.name, this.client.util.getGuildIcon(message.guild!))
@@ -55,8 +55,8 @@ export default class Command extends BaseCommand {
                 message.channel.send(embed3);
                 break;
             case "allowDefault":
-                if (!message.args[0]) return this.invalidArgs(message, "Not enough arguments. (no boolean)");
-                if (message.guild!.config.prefix === message.client.config.prefix) return this.invalidArgs(message, "You should set a prefix before using this!");
+                if (!message.args[0]) return this.invalid(message, "Not enough arguments. (no boolean)");
+                if (message.guild!.config.prefix === message.client.config.prefix) return this.invalid(message, "You should set a prefix before using this!");
                 const embed4 = new MessageEmbed()
                     .setAuthor(message.guild!.name, this.client.util.getGuildIcon(message.guild!))
                     .setColor("#00FF00")
@@ -71,12 +71,12 @@ export default class Command extends BaseCommand {
                     embed4.setDescription("Usage of default prefix is now disallowed.");
                     return message.channel.send(embed4);
                 } else {
-                    this.invalidArgs(message, "boolean must be true or false!");
+                    this.invalid(message, "boolean must be true or false!");
                 }
                 break;
 
             default:
-                this.invalidArgs(message, "Not enough arguments.");
+                this.invalid(message, "Not enough arguments.");
                 break;
         }
         return message;

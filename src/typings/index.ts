@@ -5,12 +5,13 @@ import { Adapter as DatabaseAdapter } from "../database";
 import { Model, Document } from "mongoose";
 
 export interface CommandComponent {
-    run(message: IMessage): any;
+    execute(message: IMessage): IMessage | Promise<IMessage> | void;
     _config: {
         category: string;
         path: string;
     };
-    reload(): CommandComponent | void;
+    reload(): CommandComponent;
+    invalid(msg: IMessage, reason: string): Promise<IMessage>;
     conf: {
         aliases?: string[];
         cooldown?: number;
@@ -31,7 +32,7 @@ export interface CommandComponent {
 
 export interface EventProp {
     name: keyof ClientEvents;
-    run: any;
+    execute(...args: ClientEvents[EventProp["name"]]): any;
 }
 
 export interface IGuild extends Guild {
@@ -98,7 +99,7 @@ export interface IMessage extends Message {
     member: IGuildMember | null;
     client: BotClient;
     args: string[];
-    cmd: string | any;
+    cmd: string;
     flag: string[];
 }
 
@@ -129,9 +130,9 @@ export interface INewsChannel extends NewsChannel {
 }
 
 export interface ModuleConf {
-    name: string | any;
+    name: string;
     hide: boolean;
-    path: string | any;
+    path: string;
     cmds: string[];
 }
 

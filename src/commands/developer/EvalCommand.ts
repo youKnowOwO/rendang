@@ -19,7 +19,7 @@ export default class EvalCommand extends BaseCommand {
         });
     }
 
-    public async run(message: IMessage): Promise<IMessage> {
+    public async execute(message: IMessage): Promise<IMessage> {
         const msg = message;
         const client = this.client;
 
@@ -29,7 +29,7 @@ export default class EvalCommand extends BaseCommand {
 
         try {
             const code = message.args.slice(0).join(" ");
-            if (!code) return this.invalidArgs(message, "No js code was provided");
+            if (!code) return this.invalid(message, "No js code was provided");
             let evaled;
             if (message.flag.includes("silent") && message.flag.includes("async")) {
                 await eval(`(async function() {

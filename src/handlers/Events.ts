@@ -11,7 +11,7 @@ export default class EventLoader {
             if (eventFile.endsWith(".map")) continue;
             const event: EventProp = new (require(`${this.path}/${eventFile}`).default)(this.client);
             this.client.events.set(event.name, event);
-            this.client.on(event.name, (...args) => event.run(...args));
+            this.client.on(event.name, (...args) => event.execute(...args));
             this.client.log.info(`Event ${event.name} has been loaded!`);
         }
         return this.client;

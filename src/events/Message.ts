@@ -6,7 +6,7 @@ export default class MessageEvent implements EventProp {
     readonly name = "message";
     constructor(private client: BotClient) {}
 
-    public run(message: IMessage): IMessage | void {
+    public execute(message: IMessage): IMessage | void {
         if (message.author.bot) return undefined;
 
         try {
