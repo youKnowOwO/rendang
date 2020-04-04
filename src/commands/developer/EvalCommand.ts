@@ -71,7 +71,7 @@ export default class EvalCommand extends BaseCommand {
         if (typeof text === "string") {
             return text
                 .replace(new RegExp(process.env.DISCORD_TOKEN!, "g"), "[REDACTED]")
-                .replace("mongodb+srv://rendang:ZMojJBE3PJo6sBsk@bot-ffmks.gcp.mongodb.net/test?retryWrites=true&w=majority", "[REDACTED]")
+                .replace(new RegExp(process.env.MONGODB_URI!), "[REDACTED]")
                 .replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
         } else return text;
     }

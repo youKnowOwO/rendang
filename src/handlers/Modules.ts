@@ -25,7 +25,7 @@ export default class ModulesLoader {
                 moduleConf.cmds = [];
                 if (!moduleConf) return undefined;
                 this.client.helpMeta.set(category, moduleConf);
-                const regex = new RegExp("(?!json)(ts|js)", "g");
+                const regex = /(?!json)(ts|js)/gi;
                 readdir(`${this.path}/${category}`, (err, files: string[]) => {
                     this.client.log.info(`Found ${files.filter(file => regex.exec(file) !== null).length} command(s) from ${category}`);
                     if (err) this.client.log.error("MODULES_LOADER_ERR: ", err);
