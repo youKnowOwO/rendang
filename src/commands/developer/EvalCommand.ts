@@ -3,7 +3,7 @@
 import BaseCommand from "../../structures/BaseCommand";
 import BotClient from "../../handlers/BotClient";
 import { IMessage, CommandComponent } from "../../typings";
-import { MessageEmbed as Embed } from "discord.js";
+import { MessageEmbed } from "discord.js";
 import { parse as parseUrl } from "url";
 
 export default class EvalCommand extends BaseCommand {
@@ -23,7 +23,7 @@ export default class EvalCommand extends BaseCommand {
         const msg = message;
         const client = this.client;
 
-        const embed = new Embed()
+        const embed = new MessageEmbed()
             .setColor("GREEN")
             .addField("Input", "```js\n" + message.args.join(" ") + "```");
 
