@@ -5,9 +5,9 @@
   "main": "src/main.ts",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js)\"",
-    "test": "yarn run lint && yarn run build:test",
-    "build": "yarn run lint && rimraf dist && tsc",
-    "build:test": "rimraf dist && tsc && rimraf dist",
+    "test": "echo [TEST] Starting test. && yarn run lint && yarn run build:test && echo [TEST] Done! Everything looks good.",
+    "build": "echo [BUILD] Building TypeScript project... && yarn run test && rimraf dist && tsc && echo [BUILD] Done.",
+    "build:test": "tsc && rimraf dist",
     "start": "node dist/main",
     "start:dev": "ts-node src/main"
   },

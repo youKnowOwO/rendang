@@ -24,7 +24,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: echo Node version $(node -v) && echo NPM version $(npm -v) && echo Yarn version $(yarn -v) && echo TypeScript version $(tsc --version)
+    - run: echo Node version $(node -v) && echo NPM version $(npm -v) && echo Yarn version $(yarn -v) && echo TypeScript $(tsc --version)
     - run: yarn install --ignore-optional
     - run: yarn test
       env:
