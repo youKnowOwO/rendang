@@ -11,7 +11,7 @@ export default class CommandsHandler {
     readonly cooldowns: Collection<string, Collection<Snowflake, number>> = new Collection();
     constructor(private client: BotClient) {}
 
-    public handle(message: IMessage): CommandComponent | void {
+    public handle(message: IMessage): any {
         const command: CommandComponent | void = this.commands.get(message.cmd) || this.commands.get(this.aliases.get(message.cmd)!);
         if (!command || command.conf.disable) return undefined;
         if (!this.cooldowns.has(command.help.name)) this.cooldowns.set(command.help.name, new Collection());
@@ -51,7 +51,7 @@ export default class CommandsHandler {
         try {
             if (command.conf.guildOnly && message.channel.type === "dm") return undefined;
             if (command.conf.devOnly && !message.author.isDev) return undefined;
-            command.execute(message);
+            return command.execute(message);
         } catch (e) {
             this.client.log.error("COMMAND_HANDLER_ERR: ", e);
         } finally {
