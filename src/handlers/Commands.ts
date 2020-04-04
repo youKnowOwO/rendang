@@ -1,23 +1,28 @@
 /* eslint-disable no-unsafe-finally */
 import BotClient from "./BotClient";
-import { CommandComponent, IGuild, IGuildMember, IMessage } from "../typings";
+import { CommandComponent, IGuild, IGuildMember, IMessage, HelpMeta } from "../typings";
 import { Collection, Snowflake, BitFieldResolvable, PermissionString, MessageEmbed } from "discord.js";
 
 export default class CommandsHandler {
+    readonly commands: Collection<string, CommandComponent> = new Collection();
+    readonly aliases: Collection<string, string> = new Collection();
+    readonly categories: Collection<string, Collection<string, CommandComponent>> = new Collection();
+    readonly helpMeta: Collection<string, HelpMeta> = new Collection();
+    readonly cooldowns: Collection<string, Collection<Snowflake, number>> = new Collection();
     constructor(private client: BotClient) {}
 
     public handle(message: IMessage): CommandComponent | void {
-        const command: CommandComponent | void = this.client.commands.get(message.cmd) || this.client.commands.get(this.client.aliases.get(message.cmd)!);
+        const command: CommandComponent | void = this.commands.get(message.cmd) || this.commands.get(this.aliases.get(message.cmd)!);
         if (!command || command.conf.disable) return undefined;
-        if (!this.client.cooldowns.has(command.help.name)) this.client.cooldowns.set(command.help.name, new Collection());
+        if (!this.cooldowns.has(command.help.name)) this.cooldowns.set(command.help.name, new Collection());
         const now = Date.now();
-        const timestamps: Collection<Snowflake, number> | undefined = this.client.cooldowns.get(command.help.name);
+        const timestamps: Collection<Snowflake, number> = this.cooldowns.get(command.help.name)!;
         const cooldownAmount = (command.conf.cooldown || 3) * 1000;
-        if (!timestamps!.has(message.author.id)) {
-            timestamps!.set(message.author.id, now);
-            if (message.author.isDev) timestamps!.delete(message.author.id);
+        if (!timestamps.has(message.author.id)) {
+            timestamps.set(message.author.id, now);
+            if (message.author.isDev) timestamps.delete(message.author.id);
         } else {
-            const expirationTime = timestamps!.get(message.author.id)! + cooldownAmount;
+            const expirationTime = timestamps.get(message.author.id)! + cooldownAmount;
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
                 message.channel.send(`**${message.author.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then((msg: IMessage) => {
@@ -26,8 +31,8 @@ export default class CommandsHandler {
                 return undefined;
             }
 
-            timestamps!.set(message.author.id, now);
-            setTimeout(() => timestamps!.delete(message.author.id), cooldownAmount);
+            timestamps.set(message.author.id, now);
+            setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
         }
 
         if (command.conf.requiredPermissions!.length !== 0 && message.channel.type !== "dm") {

@@ -26,9 +26,9 @@ export default class ReloadCommand extends BaseCommand {
                 .setColor("#00FF00")
                 .setDescription("Reloading...");
             const MSG = await message.channel.send(embed);
-            this.client.helpMeta.forEach((category) => {
+            this.client.commandsHandler.helpMeta.forEach((category) => {
                 category.cmds.forEach((cmd) => {
-                    this.client.commands.get(cmd)!.reload();
+                    this.client.commandsHandler.commands.get(cmd)!.reload();
                 });
             });
             embed.setDescription("Reloaded.");
@@ -38,14 +38,14 @@ export default class ReloadCommand extends BaseCommand {
         if (message.flag[0] === "category") {
             if (!message.args[0]) return this.invalid(message, "No args was passed.");
             const category = message.args[0].toLowerCase();
-            if (!this.client.categories.has(category)) return this.invalid(message, "No such category called: " + category + ".");
-            const commands = this.client.categories.get(category)!.keyArray();
+            if (!this.client.commandsHandler.categories.has(category)) return this.invalid(message, "No such category called: " + category + ".");
+            const commands = this.client.commandsHandler.categories.get(category)!.keyArray();
             const embed = new MessageEmbed()
                 .setColor("#00FF00")
                 .setDescription(`Reloading ${category} category...`);
             const MSG = await message.channel.send(embed);
             commands.forEach(cmd => {
-                this.client.commands.get(cmd)!.reload();
+                this.client.commandsHandler.commands.get(cmd)!.reload();
             });
             embed.setDescription(`Category ${category} reloaded.`);
             MSG.edit(embed);
@@ -54,13 +54,13 @@ export default class ReloadCommand extends BaseCommand {
         if (message.flag[0] === "command") {
             if (!message.args[0]) return this.invalid(message, "No args was passed.");
             let command: string | undefined = message.args[0].toLowerCase();
-            if (this.client.commands.has(command) && this.client.aliases.has(command)) return this.invalid(message, "No such command called: " + command + ".");
-            if (this.client.aliases.has(command)) command = this.client.aliases.get(command);
+            if (this.client.commandsHandler.commands.has(command) && this.client.commandsHandler.aliases.has(command)) return this.invalid(message, "No such command called: " + command + ".");
+            if (this.client.commandsHandler.aliases.has(command)) command = this.client.commandsHandler.aliases.get(command);
             const embed = new MessageEmbed()
                 .setColor("#00FF00")
                 .setDescription(`Reloading ${command} command...`);
             const MSG = await message.channel.send(embed);
-            this.client.commands.get(command!)!.reload();
+            this.client.commandsHandler.commands.get(command!)!.reload();
             embed.setDescription(`${command} command reloaded.`);
             MSG.edit(embed);
         }

@@ -24,7 +24,7 @@ export default class ModulesLoader {
                 moduleConf.path = `${this.path}/${category}`;
                 moduleConf.cmds = [];
                 if (!moduleConf) return undefined;
-                this.client.helpMeta.set(category, moduleConf);
+                this.client.commandsHandler.helpMeta.set(category, moduleConf);
                 const regex = /(?!json)(ts|js)/gi;
                 readdir(`${this.path}/${category}`, (err, files: string[]) => {
                     this.client.log.info(`Found ${files.filter(file => regex.exec(file) !== null).length} command(s) from ${category}`);
@@ -34,14 +34,14 @@ export default class ModulesLoader {
                         if (!file.endsWith(".js") && !file.endsWith(".ts")) return undefined;
                         const prop: CommandComponent = new (require(`${this.path}/${category}/${file}`).default)(this.client, { category, path: `${this.path}/${category}/${file}`});
                         if (prop.conf.disable) disabledCommands.push(prop.help.name);
-                        this.client.commands.set(prop.help.name, prop);
+                        this.client.commandsHandler.commands.set(prop.help.name, prop);
                         prop.conf.aliases!.forEach(alias => {
-                            this.client.aliases.set(alias, prop.help.name);
+                            this.client.commandsHandler.aliases.set(alias, prop.help.name);
                         });
                         moduleConf.cmds.push(prop.help.name);
                     });
                     if (disabledCommands.length !== 0) this.client.log.info(`There are ${disabledCommands.length} command(s) disabled.`);
-                    this.client.categories.set(category, this.client.commands.filter((cmd: CommandComponent | undefined) => cmd!.help.category === category));
+                    this.client.commandsHandler.categories.set(category, this.client.commandsHandler.commands.filter((cmd: CommandComponent | undefined) => cmd!.help.category === category));
                 });
             });
         });

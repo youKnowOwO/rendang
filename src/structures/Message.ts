@@ -22,7 +22,7 @@ Structures.extend("Message", DJSMessage => {
             if (this.content.startsWith(prefix as string) || (this.content.startsWith(this.client.config.prefix) && this.guild!.config.allowDefaultPrefix)) {
                 this.args = this.content.substring(prefix!.length).trim().split(/ /g);
                 const cmd = this.args.shift()!.toLowerCase();
-                this.cmd = client.commands.has(cmd) ? cmd : null;
+                this.cmd = client.commandsHandler.commands.has(cmd) ? cmd : null;
                 while (this.args[0] && ((this.args[0].startsWith("--") && this.args[0].length != 2) || (this.args[0].startsWith("-") && this.args[0].length != 1))) {
                     let flag;
                     if (this.args[0].startsWith("--")) {
