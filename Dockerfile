@@ -9,7 +9,7 @@ WORKDIR /usr/rendang
 
 COPY . .
 RUN echo [INFO] Installing build deps... \
-&& apk add --update \
+&& apk update \
 && apk add --no-cache --virtual .build-deps build-base python g++ make \
 && echo [INFO] Build deps installed! \
 && echo [INFO] Installing 3rd party packages... \
