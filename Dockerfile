@@ -14,7 +14,6 @@ RUN echo [INFO] Starting to build Docker image... \
 && echo [INFO] Build deps installed! \
 && echo [INFO] Installing 3rd party packages... \
 && apk add --no-cache --virtual .third-party git curl \
-&& npm install yarn --global \
 && echo [INFO] 3rd party packages installed! \
 && echo [INFO] Node version: $(node --version) \
 && echo [INFO] npm version: $(npm --version) \
