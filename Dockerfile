@@ -10,10 +10,10 @@ WORKDIR /usr/rendang
 COPY . .
 RUN echo [INFO] Starting to build Docker image... \
 && echo [INFO] Installing build deps... \
-&& apk add --no-cache --virtual .build-deps build-base python g++ make \
+&& apk add --no-cache --virtual .build-deps build-base python g++ make git curl \
 && echo [INFO] Build deps installed! \
 && echo [INFO] Installing 3rd party packages... \
-&& apk add --no-cache --virtual .third-party git curl \
+&& apk add --no-cache --virtual .third-party ffmpeg \
 && echo [INFO] 3rd party packages installed! \
 && echo [INFO] Node version: $(node --version) \
 && echo [INFO] npm version: $(npm --version) \
