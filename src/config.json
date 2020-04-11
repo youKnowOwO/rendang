@@ -1,8 +1,0 @@
-{
-    "botName": "Rendang",
-    "prefix": "$",
-    "useDotEnv": true,
-    "useBlueBird": true,
-    "devs": ["290159952784392202"],
-    "staticServer": "https://hzmi.xyz/assets"
-}

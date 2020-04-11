@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { EventEmitter } from "events";
 import { LogWrapper } from "../handlers/LogWrapper";
-import { botName } from "../config.json";
+import { botName } from "../config";
 import { Logger } from "winston";
 
 export class Adapter extends EventEmitter {

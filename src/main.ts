@@ -1,9 +1,7 @@
-import { Promise as Bluebird } from "bluebird";
-import { useDotEnv, useBlueBird } from "./config.json";
+import { useDotEnv } from "./config.json";
 import { config as loadDotEnv } from "dotenv";
 import Client from "./handlers/BotClient";
 
-if (useBlueBird) global.Promise = Bluebird;
 if (useDotEnv) loadDotEnv();
 
 new Client({ disableMentions: "everyone", fetchAllMembers: true })
