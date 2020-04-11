@@ -1,4 +1,4 @@
-import { useDotEnv } from "./config.json";
+import { useDotEnv } from "./config";
 import { config as loadDotEnv } from "dotenv";
 import Client from "./handlers/BotClient";
 
