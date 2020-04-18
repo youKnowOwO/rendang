@@ -12,7 +12,7 @@ export default class CommandsHandler {
     constructor(private client: BotClient) {}
 
     public handle(message: IMessage): any {
-        const command: CommandComponent | void = this.commands.get(message.cmd) || this.commands.get(this.aliases.get(message.cmd)!);
+        const command = this.commands.get(message.cmd) || this.commands.get(this.aliases.get(message.cmd)!);
         if (!command || command.conf.disable) return undefined;
         if (!this.cooldowns.has(command.help.name)) this.cooldowns.set(command.help.name, new Collection());
         const now = Date.now();
