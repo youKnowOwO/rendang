@@ -560,22 +560,10 @@ diff@^4.0.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
-discord.js@^12.0.1:
-  version "12.1.1"
-  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/1330e2d246cf4e1b9e7f13a5f941ff086117a3fc"
-  dependencies:
-    "@discordjs/collection" "^0.1.5"
-    abort-controller "^3.0.0"
-    form-data "^3.0.0"
-    node-fetch "^2.6.0"
-    prism-media "^1.2.0"
-    setimmediate "^1.0.5"
-    tweetnacl "^1.0.3"
-    ws "^7.2.1"
-
-discord.js@discordjs/discord.js:
+discord.js@^12.0.1, discord.js@discordjs/discord.js:
   version "12.2.0"
-  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/863a70918aeabe2438336ba86e48af68befd3b39"
+  uid "67a74c33e1b124d609bee65f82656e7bf5b09764"
+  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/67a74c33e1b124d609bee65f82656e7bf5b09764"
   dependencies:
     "@discordjs/collection" "^0.1.5"
     "@discordjs/form-data" "^3.0.1"
