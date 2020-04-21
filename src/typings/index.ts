@@ -3,6 +3,11 @@ import BotClient from "../handlers/BotClient";
 import { MessageOptions } from "child_process";
 import { Adapter as DatabaseAdapter } from "../database";
 import { Model, Document } from "mongoose";
+import Rendang from "../structures/Rendang";
+
+export interface IDiscordWSEventManager { 
+    add<E extends keyof ClientEvents>(eventName: E, listener: (...args: ClientEvents[E]) => void): IDiscordWSEventManager;
+}
 
 export interface CommandComponent {
     execute(message: IMessage): any;
