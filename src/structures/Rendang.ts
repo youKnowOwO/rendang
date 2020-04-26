@@ -5,7 +5,6 @@ import { resolve } from "path";
 import * as superagent from "superagent";
 import { LogWrapper } from "../utils/LogWrapper";
 import EventManager from "../managers/EventManager";
-// import CommandsManager from "../managers/CommandsManager";
 
 // Extending DiscordJS structures
 // still none yet.
@@ -16,11 +15,9 @@ export default class Rendang extends Client {
     readonly request = superagent;
     readonly log = new LogWrapper(this.config.botName).logger;
     readonly events = new EventManager(this);
-    // readonly commands = new CommandsManager(this);
     constructor(options?: ClientOptions) { super(options); }
 
     public async build(): Promise<Rendang> {
-        // this.on("ready", () => this.commands.load());
         this.events.load(resolve(__dirname, "..", "events"));
         await this.login(this.getToken());
         return this;
