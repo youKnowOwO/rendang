@@ -33,7 +33,7 @@
     "chalk": "^4.0.0",
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.2.0",
-    "kurasuta": "^2.0.0",
+    "kurasuta": "^2.1.0",
     "mongoose": "^5.9.10",
     "superagent": "^5.2.2",
     "ts-mongoose": "0.0.21",
